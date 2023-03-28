@@ -14,6 +14,7 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordCredentials;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
+use App\Repository\UserRepository;
 
 class UserAuthenticator extends AbstractLoginFormAuthenticator
 {
@@ -21,8 +22,9 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
 
     public const LOGIN_ROUTE = 'app_login';
 
-    public function __construct(private UrlGeneratorInterface $urlGenerator)
+    public function __construct(private UrlGeneratorInterface $urlGenerator, UserRepository $userRepository)
     {
+        $this->userRepository = $userRepository;
     }
 
     public function authenticate(Request $request): Passport
@@ -31,6 +33,12 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
 
         $request->getSession()->set(Security::LAST_USERNAME, $email);
 
+        $user = $this->userRepository->findOneBy(array('email' => $email)); // Find the user in the database based on the email address
+
+        if (!$user || !$user->isVerified()) {
+            throw new AuthenticationException('User is not verified.');
+        }
+        
         return new Passport(
             new UserBadge($email),
             new PasswordCredentials($request->request->get('password', '')),
@@ -42,6 +50,16 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
+        $email = $request->request->get('email', '');
+  
+        $user = $this->userRepository->findOneBy(array('email' => $email)); // Find the user in the database based on the email address
+
+        if (implode($user->getRoles()) == "ROLE_ADMIN") {
+            return new RedirectResponse($this->urlGenerator->generate('back_default_index'));
+        } else {
+            return new RedirectResponse($this->urlGenerator->generate('front_default_index'));
+        }
+        
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
