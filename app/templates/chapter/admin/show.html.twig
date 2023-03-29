@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Chapter{% endblock %}
+
+{% block body %}
+    <h1>Chapter</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ chapter.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ chapter.title }}</td>
+            </tr>
+            <tr>
+                <th>Content</th>
+                <td>{{ chapter.content }}</td>
+            </tr>
+            <tr>
+                <th>Created_at</th>
+                <td>{{ chapter.createdAt ? chapter.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Updated_at</th>
+                <td>{{ chapter.updatedAt ? chapter.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('back_chapter_index') }}">back to list</a>
+
+    <a href="{{ path('back_chapter_edit', {'id': chapter.id}) }}">edit</a>
+
+    {{ include('chapter/admin/_delete_form.html.twig') }}
+{% endblock %}
