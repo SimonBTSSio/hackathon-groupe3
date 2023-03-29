@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Service\FileUploader;
 
 #[Route('/formation')]
 class FormationController extends AbstractController
@@ -32,6 +33,19 @@ class FormationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $image = $form->get('image')->getData();
+
+           
+            $fileUploader = new FileUploader($this->getParameter('formation_img'));
+            $fileName = $fileUploader->upload($image);
+
+            if($fileName) {
+                $formation->setImage($fileName);
+            }
+            else {
+                $this->addFlash('danger', 'Une erreur est survenue lors de l\'upload de l\'image');
+            }
+
             $formation->setCreatedAt(new \DateTimeImmutable());
             $formation->setUpdatedAt(new \DateTimeImmutable());
 

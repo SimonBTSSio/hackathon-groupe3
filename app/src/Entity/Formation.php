@@ -28,7 +28,7 @@ class Formation
     #[ORM\Column]
     private ?int $duration = null;
 
-    #[ORM\OneToMany(mappedBy: 'formation', targetEntity: Chapter::class)]
+    #[ORM\OneToMany(mappedBy: 'formation', targetEntity: Chapter::class, cascade: ['remove'])]
     private Collection $chapter;
 
     #[ORM\Column]

@@ -20,7 +20,8 @@ class Chapter
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $content = null;
 
-    #[ORM\ManyToOne(inversedBy: 'chapter')]
+    #[ORM\ManyToOne(inversedBy: 'chapter', targetEntity: Formation::class)]
+    #[ORM\JoinColumn(name: 'formation_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     private ?Formation $formation = null;
 
     #[ORM\Column]
