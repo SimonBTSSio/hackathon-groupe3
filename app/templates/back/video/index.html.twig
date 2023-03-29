@@ -21,8 +21,8 @@
                 <td>{{ video.description }}</td>
                 <td>{{ video.createdAt ? video.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('app_video_show_details', {'id': video.id}) }}">show</a>
-                    <a href="{{ path('app_video_edit', {'id': video.id}) }}">edit</a>
+                    <a href="{{ path('back_app_video_show_details', {'id': video.id}) }}">show</a>
+                    <a href="{{ path('back_app_video_edit', {'id': video.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -33,5 +33,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_video_new') }}">Create new</a>
+    <a href="{{ path('back_app_video_new') }}">Create new</a>
 {% endblock %}

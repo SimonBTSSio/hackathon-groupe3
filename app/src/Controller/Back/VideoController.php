@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Back;
 
+use App\Controller\FileException;
 use App\Entity\Video;
 use App\Form\VideoType;
 use App\Repository\VideoRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/video')]
 class VideoController extends AbstractController
@@ -18,7 +19,7 @@ class VideoController extends AbstractController
     #[Route('/', name: 'app_video_index', methods: ['GET'])]
     public function index(VideoRepository $videoRepository): Response
     {
-        return $this->render('video/index.html.twig', [
+        return $this->render('back/video/index.html.twig', [
             'videos' => $videoRepository->findAll(),
         ]);
     }
@@ -53,10 +54,10 @@ class VideoController extends AbstractController
 
             $videoRepository->save($video, true);
 
-            return $this->redirectToRoute('app_video_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('back_app_video_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('video/new.html.twig', [
+        return $this->renderForm('back/video/new.html.twig', [
             'video' => $video,
             'form' => $form,
         ]);
@@ -65,7 +66,7 @@ class VideoController extends AbstractController
     #[Route('/{id}', name: 'app_video_show_details', methods: ['GET'])]
     public function show(Video $video): Response
     {
-        return $this->render('video/show.html.twig', [
+        return $this->render('back/video/show.html.twig', [
             'video' => $video,
         ]);
     }
@@ -97,10 +98,10 @@ class VideoController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $videoRepository->save($video, true);
 
-            return $this->redirectToRoute('app_video_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('back_app_video_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('video/edit.html.twig', [
+        return $this->renderForm('back/video/edit.html.twig', [
             'video' => $video,
             'form' => $form,
         ]);
@@ -113,6 +114,6 @@ class VideoController extends AbstractController
             $videoRepository->remove($video, true);
         }
 
-        return $this->redirectToRoute('app_video_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('back_app_video_index', [], Response::HTTP_SEE_OTHER);
     }
 }
