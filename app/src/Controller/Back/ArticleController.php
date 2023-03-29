@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Back\Controller;
 
 use App\Entity\Article;
 use App\Form\ArticleType;

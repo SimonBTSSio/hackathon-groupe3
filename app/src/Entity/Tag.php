@@ -1,35 +1,32 @@
 <?php
 namespace App\Entity;
 
+use App\Repository\TagRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
-/**
- * @ORM\Entity()
- */
+#[ORM\Entity(repositoryClass: TagRepository::class)]
 class Tag
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(length: 255)]
     private $label;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Article::class, mappedBy="tags")
-     */
+    #[ORM\ManyToMany(targetEntity: Article::class, mappedBy: "tags")]
     private $articles;
+
+    #[ORM\ManyToMany(targetEntity: Video::class, mappedBy: "tags")]
+    private $videos;
 
     public function __construct()
     {
         $this->articles = new ArrayCollection();
+        $this->videos = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -49,9 +46,6 @@ class Tag
         return $this;
     }
 
-    /**
-     * @return Collection|Article[]
-     */
     public function getArticles(): Collection
     {
         return $this->articles;
@@ -71,6 +65,30 @@ class Tag
     {
         if ($this->articles->removeElement($article)) {
             $article->removeTag($this);
+        }
+
+        return $this;
+    }
+
+    public function getVideos(): Collection
+    {
+        return $this->articles;
+    }
+
+    public function addVideo(Video $video): self
+    {
+        if (!$this->videos->contains($video)) {
+            $this->videos[] = $video;
+            $video->addTag($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVideo(Video $video): self
+    {
+        if ($this->videos->removeElement($video)) {
+            $video->removeTag($this);
         }
 
         return $this;
