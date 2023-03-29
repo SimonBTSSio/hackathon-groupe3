@@ -19,3 +19,7 @@ controllers_doctor:
     type: attribute
     name_prefix: doctor_
     prefix: /doctor/
+
+controller_register:
+    resource: ../src/Controller/RegistrationController.php
+    type: attribute
