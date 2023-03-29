@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Back;
+namespace App\Controller\Doctor;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,8 +17,8 @@ class DefaultController extends AbstractController
     #[Route('/', name: 'default_index')]
     public function index(UserRepository $userRepository, UserInterface $user): Response
     {
-        return $this->render('back/default/index.html.twig', [
-            'user_admin' => $userRepository->findBy(array('id' => $user->getId())),
+        return $this->render('doctor/default/index.html.twig', [
+            'user' => $userRepository->findBy(array('id' => $user->getId())),
         ]);
     }
 
@@ -26,9 +26,9 @@ class DefaultController extends AbstractController
     public function edit(Request $request, User $user, UserRepository $userRepository, UserPasswordHasherInterface $passwordHasher): Response
     {
         if ($user->getId() != $this->getUser()->getId()) {
-            return $this->redirectToRoute('back_default_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('doctor_default_index', [], Response::HTTP_SEE_OTHER);
         }
-
+        
         $form = $this->createForm(BackUserType::class, $user);
         $form->handleRequest($request);
 
@@ -46,10 +46,10 @@ class DefaultController extends AbstractController
 
             $userRepository->save($user, true);
 
-            return $this->redirectToRoute('back_default_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('doctor_default_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('back/profil/edit.html.twig', [
+        return $this->renderForm('doctor/profil/edit.html.twig', [
             'user_admin' => $userRepository->findBy(array('id' => $user->getId())),
             'form' => $form,
         ]);

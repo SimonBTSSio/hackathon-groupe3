@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Administration{% endblock %}
+{% block title %}Médecin{% endblock %}
 
 {% block body %}
 <style>
@@ -9,12 +9,11 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ user_admin[0].firstname }} {{ user_admin[0].lastname }}! ✅</h1>
+    <h1>Hello {{ user[0].firstname }} {{ user[0].lastname }}! ✅</h1>
 
     Rubriques:
     <ul>
-        <li><a href="{{ path('back_user_index') }}">Les utilisateurs</a></li>
-        <li><a href="{{ path('back_edit', {'id': user_admin[0].id}) }}">Modifier mon profil</a></li>
+        <li><a href="{{ path('doctor_edit', {'id': user[0].id}) }}">Modifier mon profil</a></li>
     </ul>
 </div>
 {% endblock %}

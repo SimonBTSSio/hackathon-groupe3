@@ -15,6 +15,7 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordC
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 use App\Repository\UserRepository;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 class UserAuthenticator extends AbstractLoginFormAuthenticator
 {
@@ -56,8 +57,10 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
 
         if (implode($user->getRoles()) == "ROLE_ADMIN") {
             return new RedirectResponse($this->urlGenerator->generate('back_default_index'));
-        } else {
+        } elseif (implode($user->getRoles()) == "ROLE_MEMBER") {
             return new RedirectResponse($this->urlGenerator->generate('front_default_index'));
+        } else {
+            return new RedirectResponse($this->urlGenerator->generate('doctor_default_index'));
         }
         
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {

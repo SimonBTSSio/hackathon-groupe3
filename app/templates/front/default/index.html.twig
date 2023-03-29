@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello FrontController!{% endblock %}
+{% block title %}Adhérent{% endblock %}
 
 {% block body %}
 <style>
@@ -14,6 +14,7 @@
     Rubriques:
     <ul>
         <li><a href="{{ path('front_edit', {'id': user[0].id}) }}">Modifier mon profil</a></li>
+        <li><a href="{{ path('front_doctor_default_index') }}">Les Médecins</a></li>
     </ul>
 </div>
 {% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les Médecins{% endblock %}
+
+{% block body %}
+    <h1>Les Médecins</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Prénom</th>
+                <th>Nom</th>
+                <th>Email</th>
+                <th>Description</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for doctor in doctors %}
+            <tr>
+                <td>{{ doctor.firstname }}</td>
+                <td>{{ doctor.lastname }}</td>
+                <td>{{ doctor.email }}</td>
+                <td>{{ doctor.description }}</td>
+                <td>
+                    <a href="{{ path('front_doctor_consult', {'id': doctor.id}) }}">Consulter</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">Pas encore de médecin</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('front_default_index') }}">Retour</a>
+
+{% endblock %}

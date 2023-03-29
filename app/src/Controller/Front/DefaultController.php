@@ -25,6 +25,10 @@ class DefaultController extends AbstractController
     #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, User $user, UserRepository $userRepository, UserPasswordHasherInterface $passwordHasher): Response
     {
+        if ($user->getId() != $this->getUser()->getId()) {
+            return $this->redirectToRoute('front_default_index', [], Response::HTTP_SEE_OTHER);
+        }
+        
         $form = $this->createForm(FrontUserType::class, $user);
         $form->handleRequest($request);
 
