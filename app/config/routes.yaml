@@ -12,3 +12,7 @@ controllers_front:
     resource: ../src/Controller/Front
     type: attribute
     name_prefix: front_
+
+controller_register:
+    resource: ../src/Controller/RegistrationController.php
+    type: attribute
