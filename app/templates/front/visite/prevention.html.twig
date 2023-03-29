@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Visite index{% endblock %}
+
+{% block body %}
+
+<h1>Vos futures visites</h1>
+    {% if visites %}
+{% for visite in visites %}
+    {% if visite.date > date('now') %}
+        {{ visite.date|date('d/m/Y') }}
+        {{ visite.domaine }}
+        {{ visite.medecin }}
+    {% endif %}
+{% endfor %}
+    {% else %}
+        <p>Vous n'avez pas encore de visites</p>
+    {% endif %}
+
+    <h1>Vos anciennes visites</h1>
+    {% if visites %}
+    {% for visite in visites %}
+        {% if visite.date < date('now') %}
+            {{ visite.date|date('d/m/Y') }}
+            {{ visite.domaine }}
+            {{ visite.medecin }}
+        {% endif %}
+    {% endfor %}
+    {% else %}
+        <p>Vous n'avez pas encore de visites</p>
+    {% endif %}
+{% endblock %}
