@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Adhérent{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Hello {{ user[0].firstname }} {{ user[0].lastname }}! ✅</h1>
+
+    Rubriques:
+    <ul>
+        <li><a href="{{ path('front_edit', {'id': user[0].id}) }}">Modifier mon profil</a></li>
+        <li><a href="{{ path('front_doctor_default_index') }}">Les Médecins</a></li>
+        <li><a href="{{ path('front_visite_prevention') }}">Page prévention</a></li>
+        <li><a href="{{ path('front_new_visite')  }}">Créer prévention</a></li>
+    </ul>
+</div>
+{% endblock %}
