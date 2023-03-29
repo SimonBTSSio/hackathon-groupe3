@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class UserType extends AbstractType
 {
@@ -30,8 +31,9 @@ class UserType extends AbstractType
             ])
             ->add('roles', ChoiceType::class, array(
                 'choices' => array(
-                    'member' => 'ROLE_MEMBER',
                     'admin' => 'ROLE_ADMIN',
+                    'member' => 'ROLE_MEMBER',
+                    'doctor' => 'ROLE_DOCTOR',
                 ),
                 'label' => 'Role :',
             ))
@@ -73,6 +75,16 @@ class UserType extends AbstractType
                         'maxMessage' => 'Le nom ne peut pas dépasser {{ limit }} caractères'
                     ]),
                 ],
+            ])
+            ->add('description', TextareaType::class, [
+                'label' => 'La description',
+                'constraints' => [
+                    new Length([
+                        'min' => 2,
+                        'minMessage' => 'La description doit comporter au moins {{ limit }} caractères'
+                    ]),
+                ],
+                'required'   => false,
             ])
         ;
         

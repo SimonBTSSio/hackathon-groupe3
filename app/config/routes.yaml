@@ -12,6 +12,13 @@ controllers_front:
     resource: ../src/Controller/Front
     type: attribute
     name_prefix: front_
+    prefix: /member/
+
+controllers_doctor:
+    resource: ../src/Controller/Doctor
+    type: attribute
+    name_prefix: doctor_
+    prefix: /doctor/
 
 controller_register:
     resource: ../src/Controller/RegistrationController.php

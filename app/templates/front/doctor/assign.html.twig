@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Consulter un médecin{% endblock %}
+
+{% block body %}
+    <h1>Consulter un médecin</h1>
+
+    {{ include('front/doctor/_form.html.twig', {'button_label': 'Envoyer'}) }}
+
+    <a href="{{ path('front_default_index') }}">Retour</a>
+{% endblock %}
