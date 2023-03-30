@@ -1,0 +1,10 @@
+{
+  "app/app.css": "/app/app.css",
+  "app/app.js": "/app/app.js",
+  "app/runtime.js": "/app/runtime.js",
+  "app/images/landding2.png": "/app/images/landding2.png",
+  "app/images/landding4.png": "/app/images/landding4.png",
+  "app/images/landding1.png": "/app/images/landding1.png",
+  "app/images/landding3.png": "/app/images/landding3.png",
+  "app/images/Logo.png": "/app/images/Logo.png"
+}
