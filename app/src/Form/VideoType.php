@@ -7,6 +7,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\Tag;
 
 
 class VideoType extends AbstractType
@@ -20,6 +22,10 @@ class VideoType extends AbstractType
                 'label' => 'Video file',
                 'mapped' => false,
                 'required' => true,
+            ])
+            ->add('tags', EntityType::class, [
+                'class' => Tag::class,
+                'multiple' => true,
             ])
         ;
     }
