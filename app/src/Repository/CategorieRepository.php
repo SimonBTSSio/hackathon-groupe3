@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\Chapter;
+use App\Entity\Categorie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Chapter>
+ * @extends ServiceEntityRepository<Categorie>
  *
- * @method Chapter|null find($id, $lockMode = null, $lockVersion = null)
- * @method Chapter|null findOneBy(array $criteria, array $orderBy = null)
- * @method Chapter[]    findAll()
- * @method Chapter[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Categorie|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Categorie|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Categorie[]    findAll()
+ * @method Categorie[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ChapterRepository extends ServiceEntityRepository
+class CategorieRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Chapter::class);
+        parent::__construct($registry, Categorie::class);
     }
 
-    public function save(Chapter $entity, bool $flush = false): void
+    public function save(Categorie $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class ChapterRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Chapter $entity, bool $flush = false): void
+    public function remove(Categorie $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class ChapterRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return Chapter[] Returns an array of Chapter objects
+//     * @return Categorie[] Returns an array of Categorie objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class ChapterRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Chapter
+//    public function findOneBySomeField($value): ?Categorie
 //    {
 //        return $this->createQueryBuilder('c')
 //            ->andWhere('c.exampleField = :val')
