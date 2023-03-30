@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Back\Controller;
+namespace App\Controller\Back;
 
 use App\Entity\Tag;
 use App\Form\TagType;
@@ -20,7 +20,7 @@ class TagController extends AbstractController
             ->getRepository(Tag::class)
             ->findAll();
 
-        return $this->render('tag/index.html.twig', [
+        return $this->render('back/tag/index.html.twig', [
             'tags' => $tags,
         ]);
     }
@@ -36,10 +36,10 @@ class TagController extends AbstractController
             $entityManager->persist($tag);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_tag_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('back_app_tag_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('tag/new.html.twig', [
+        return $this->renderForm('back/tag/new.html.twig', [
             'tag' => $tag,
             'form' => $form,
         ]);
@@ -48,7 +48,7 @@ class TagController extends AbstractController
     #[Route('/{id}', name: 'app_tag_show', methods: ['GET'])]
     public function show(Tag $tag): Response
     {
-        return $this->render('tag/show.html.twig', [
+        return $this->render('back/tag/show.html.twig', [
             'tag' => $tag,
         ]);
     }
@@ -62,10 +62,10 @@ class TagController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_tag_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('back_app_tag_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('tag/edit.html.twig', [
+        return $this->renderForm('back/tag/edit.html.twig', [
             'tag' => $tag,
             'form' => $form,
         ]);
@@ -79,6 +79,6 @@ class TagController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_tag_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('back_app_tag_index', [], Response::HTTP_SEE_OTHER);
     }
 }

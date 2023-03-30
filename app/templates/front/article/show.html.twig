@@ -35,10 +35,12 @@
             </tr>
         </tbody>
     </table>
+    <h1>Tags</h1>
+    {% for tag in article.tags %}
+        <div>
+            {{ tag.id }} - {{ tag.label }}
+        </div>
+    {% endfor %}
 
-    <a href="{{ path('app_article_index') }}">back to list</a>
-
-    <a href="{{ path('app_article_edit', {'id': article.id}) }}">edit</a>
-
-    {{ include('article/_delete_form.html.twig') }}
+    <a href="{{ path('front_app_article_index') }}">back to list</a>
 {% endblock %}

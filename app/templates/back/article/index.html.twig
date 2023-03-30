@@ -35,8 +35,8 @@
                     {% endfor %}
                 </td>
                 <td>
-                    <a href="{{ path('app_article_show', {'id': article.id}) }}">show</a>
-                    <a href="{{ path('app_article_edit', {'id': article.id}) }}">edit</a>
+                    <a href="{{ path('back_app_article_show', {'id': article.id}) }}">show</a>
+                    <a href="{{ path('back_app_article_edit', {'id': article.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -47,5 +47,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_article_new') }}">Create new</a>
+    <a href="{{ path('back_app_article_new') }}">Create new</a>
 {% endblock %}

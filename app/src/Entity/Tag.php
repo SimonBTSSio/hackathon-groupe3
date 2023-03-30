@@ -12,7 +12,7 @@ class Tag
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private $id;
+    private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     private $label;
