@@ -8,6 +8,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\UserRepository;
 use Symfony\Component\Security\Core\User\UserInterface;
 use App\Entity\User;
+use App\Form\FormTagType;
+use App\Entity\Tag;
+use App\Repository\TagRepository;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\FrontUserType;
@@ -50,4 +53,25 @@ class DefaultController extends AbstractController
             'form' => $form,
         ]);
     }
+
+    
+    #[Route('/centre-interets', name: 'centre_interets', methods: ['GET', 'POST'])]
+    public function new(Request $request, TagRepository $tagRepository): Response
+    {
+        $tag = new Tag();
+        $form = $this->createForm(FormTagType::class, $tag);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $tagRepository->save($tag, true);
+
+            return $this->redirectToRoute('back_default_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('back/interets/new.html.twig', [
+            'tag' => $tag,
+            'form' => $form,
+        ]);
+    }
+
 }

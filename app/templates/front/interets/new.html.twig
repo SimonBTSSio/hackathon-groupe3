@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes centres d'intérêts{% endblock %}
+
+{% block body %}
+    <h1>Mes centres d'intérêts/h1>
+
+    {{ include('back/interets/_form.html.twig') }}
+
+    <a href="{{ path('back_d_index') }}">Retour</a>
+{% endblock %}
