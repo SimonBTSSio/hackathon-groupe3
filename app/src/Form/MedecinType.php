@@ -2,24 +2,28 @@
 
 namespace App\Form;
 
-use App\Entity\Tag;
+use App\Entity\Medecin;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
-class TagType extends AbstractType
+class MedecinType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('label')
-        ;
+            ->add('nom', EntityType::class, [
+                'class' => Medecin::class,
+                'choice_label' => 'nom',
+                'placeholder' => 'Sélectionnez un médecin',
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Tag::class,
+            'data_class' => Medecin::class,
         ]);
     }
 }
