@@ -19,6 +19,7 @@ class DefaultController extends AbstractController
     {
         return $this->render('front/default/index.html.twig', [
             'user' => $userRepository->findBy(array('id' => $user->getId())),
+            'user_tag' => $user->getTags(),
         ]);
     }
 

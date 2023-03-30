@@ -23,10 +23,15 @@ class Tag
     #[ORM\ManyToMany(targetEntity: Video::class, mappedBy: "tags")]
     private $videos;
 
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'tags')]
+    #[ORM\JoinColumn(nullable: true)]
+    private Collection $users;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
         $this->videos = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -89,6 +94,30 @@ class Tag
     {
         if ($this->videos->removeElement($video)) {
             $video->removeTag($this);
+        }
+
+        return $this;
+    }
+
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+            $user->addAbility($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->removeElement($user)) {
+            $user->removeAbility($this);
         }
 
         return $this;
