@@ -22,7 +22,7 @@ class ArticleController extends AbstractController
             ->getRepository(Article::class)
             ->findAll();
 
-        return $this->render('article/index.html.twig', [
+        return $this->render('back/article/index.html.twig', [
             'articles' => $articles,
         ]);
     }
@@ -59,10 +59,10 @@ class ArticleController extends AbstractController
             $entityManager->persist($article);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('back_app_article_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('article/new.html.twig', [
+        return $this->renderForm('back/article/new.html.twig', [
             'article' => $article,
             'form' => $form,
             'tags' => $tagsArray
@@ -72,7 +72,7 @@ class ArticleController extends AbstractController
     #[Route('/{id}', name: 'app_article_show', methods: ['GET'])]
     public function show(Article $article): Response
     {
-        return $this->render('article/show.html.twig', [
+        return $this->render('back/article/show.html.twig', [
             'article' => $article,
         ]);
     }
@@ -86,10 +86,10 @@ class ArticleController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('back_app_article_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('article/edit.html.twig', [
+        return $this->renderForm('back/article/edit.html.twig', [
             'article' => $article,
             'form' => $form,
         ]);
@@ -103,6 +103,6 @@ class ArticleController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('back_app_article_index', [], Response::HTTP_SEE_OTHER);
     }
 }
