@@ -3,7 +3,7 @@
 {% block title %}Nos formations{% endblock %}
 
 {% block body %}
-    <h1>Les formations Jaji</h1>
+    <h1 class="text-2xl">Les formations Jaji</h1>
 
     {% for formation in formations %}
     <a href="{{ path('front_formation_show', {'id': formation.id}) }}">
