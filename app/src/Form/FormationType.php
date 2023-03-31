@@ -23,12 +23,13 @@ class FormationType extends AbstractType
                 'required' => false,
                 'constraints' => [
                     new File([
-                        'maxSize' => '1024k',
+                        'maxSize' => '2048k',
                         'mimeTypes' => [
                             'image/jpeg',
                             'image/png',
+                            'image/jpg'
                         ],
-                        'mimeTypesMessage' => 'Formats autorisés : jpeg, png',
+                        'mimeTypesMessage' => 'Formats autorisés : jpeg, png, jpg',
                     ])
                 ],
             ])

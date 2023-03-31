@@ -3,19 +3,19 @@
 {% block title %}Nos formations{% endblock %}
 
 {% block body %}
-    <h1 class="text-2xl">Les formations Jaji</h1>
+    <h1 class="text-xl font-bold">FORMATION</h1>
 
-    {% for formation in formations %}
-    <a href="{{ path('front_formation_show', {'id': formation.id}) }}">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">{{ formation.title }}</h5>
-                <p class="card-text">{{ formation.description }}</p>
-                <p class="card-text">{{ formation.duration }} heures</p>
-            </div>
-        </div>
-    </a>
-    {% endfor %}
-
+    <div class="grid grid-cols-4 gap-4">
+        {% for formation in formations %}
+            <a href="{{ path('front_formation_show', {'id': formation.id}) }}">
+                <div class="relative">
+                    <img class="rounded-tl-lg rounded-br-lg" src="/img/formation/{{ formation.image }}">
+                    <div class="absolute bottom-0 left-0 rounded-bl-lg rounded-tr-lg p-2">
+                        <h2 class="text-lg font-bold text-white overflow-hidden">{{ formation.title }}</h2>
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
 
 {% endblock %}
