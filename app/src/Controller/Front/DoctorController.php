@@ -44,6 +44,7 @@ class DoctorController extends AbstractController
                 ->context([
                     'content' => $form->get('description')->getData(),
                     'user' => $this->getUser(),
+                    'doctor' => $userRepository->findOneBy(array('id' => $id)),
                 ]);
 
             $mailer->send($email);
