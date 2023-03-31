@@ -1,37 +1,21 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-front.html.twig' %}
 
 {% block title %}Les Médecins{% endblock %}
 
 {% block body %}
+    <div class="container">
     <h1>Les Médecins</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Prénom</th>
-                <th>Nom</th>
-                <th>Email</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
+
+    <ul class="doctor">
         {% for doctor in doctors %}
-            <tr>
-                <td>{{ doctor.firstname }}</td>
-                <td>{{ doctor.lastname }}</td>
-                <td>{{ doctor.email }}</td>
-                <td>
-                    <a href="{{ path('front_doctor_consult', {'id': doctor.id}) }}">Consulter</a>
-                </td>
-            </tr>
+            <li><a href="{{ path('front_doctor_consult', {'id': doctor.id}) }}">
+            <img src="{{ asset('build/images/doctor.jpg') }}" alt="{{ doctor.firstname }} {{ doctor.lastname }}">
+            Dr {{ doctor.lastname }} <br> Généraliste</a></li>
         {% else %}
-            <tr>
-                <td colspan="8">Pas encore de médecin</td>
-            </tr>
+            <li>Pas encore de médecin</li>
         {% endfor %}
-        </tbody>
-    </table>
+    </ul>
 
-    <a href="{{ path('front_default_index') }}">Retour</a>
-
+    </div>
 {% endblock %}

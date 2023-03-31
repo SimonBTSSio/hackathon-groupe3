@@ -22,3 +22,8 @@ body {
     background-color: #ffffff;
     font-family: 'Poppins', sans-serif;
 }
+
+
+.container {
+    padding-left: 290px;
+}
