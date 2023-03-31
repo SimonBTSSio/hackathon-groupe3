@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Video{% endblock %}
+
+{% block body %}
+    <h1>Video</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Title</th>
+                <td>{{ video.title }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ video.description }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ video.createdAt ? video.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ video.updatedAt ? video.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <td>
+                    {% for tag in video.tags %}
+                        <div>
+                            {{ tag.id }} - {{ tag.label }}
+                        </div>
+                    {% endfor %}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <video width="320" height="240" controls>
+        <source src="{{ path('front_app_video_show_video', {'id': video.id}) }}" type="video/mp4">
+    </video>
+
+    <a href="{{ path('front_app_video_index') }}">back to list</a>
+{% endblock %}

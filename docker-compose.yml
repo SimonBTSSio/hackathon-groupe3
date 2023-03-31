@@ -22,6 +22,7 @@ services:
       - '9027:9000'
     volumes:
       - ./app:/var/www/html
+      - ./php/php.ini:/usr/local/etc/php/php.ini
     depends_on:
       - db
   nginx:

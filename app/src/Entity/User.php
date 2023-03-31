@@ -37,18 +37,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 100)]
     private ?string $firstname = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $description = null;
-
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Visite::class)]
     private Collection $visite;
 
+    #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'user')]
+    #[ORM\JoinColumn(nullable: true)]
+    private $tags;
+
     public function __construct()
     {
         $this->visite = new ArrayCollection();
+        $this->tags = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -143,18 +145,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(string $description): self
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
     public function isVerified(): bool
     {
         return $this->isVerified;
@@ -193,6 +183,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $visite->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTags(): Collection
+    {
+        return $this->tags;
+    }
+
+    public function addTag(Tag $tag): self
+    {
+        if (!$this->tags->contains($tag)) {
+            $this->tags[] = $tag;
+        }
+
+        return $this;
+    }
+
+    public function removeTag(Tag $tag): self
+    {
+        $this->tags->removeElement($tag);
 
         return $this;
     }

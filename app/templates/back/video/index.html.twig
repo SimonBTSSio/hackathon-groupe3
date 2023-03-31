@@ -11,6 +11,7 @@
                 <th>Title</th>
                 <th>Description</th>
                 <th>CreatedAt</th>
+                <th>Tags</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -20,6 +21,13 @@
                 <td>{{ video.title }}</td>
                 <td>{{ video.description }}</td>
                 <td>{{ video.createdAt ? video.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    {% for tag in video.tags %}
+                        <div>
+                            {{ tag.id }} - {{ tag.label }}
+                        </div>
+                    {% endfor %}
+                </td>
                 <td>
                     <a href="{{ path('back_app_video_show_details', {'id': video.id}) }}">show</a>
                     <a href="{{ path('back_app_video_edit', {'id': video.id}) }}">edit</a>

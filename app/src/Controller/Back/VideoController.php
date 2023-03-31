@@ -32,6 +32,10 @@ class VideoController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $tags = $form->get("tags")->getData();
+            foreach($tags as $tag){
+                $video->addTag($tag);
+            }
             // Handle file upload
             $videoFile = $form->get('video')->getData();
 
