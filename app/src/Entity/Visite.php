@@ -17,14 +17,11 @@ class Visite
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $date = null;
 
-    #[ORM\Column(length: 100)]
-    private ?string $domaine = null;
-
-    #[ORM\Column(length: 100)]
-    private ?string $medecin = null;
-
     #[ORM\ManyToOne(inversedBy: 'visite')]
     private ?User $user = null;
+
+    #[ORM\ManyToOne(inversedBy: 'visites')]
+    private ?Categorie $categorie = null;
 
     public function getId(): ?int
     {
@@ -43,30 +40,6 @@ class Visite
         return $this;
     }
 
-    public function getDomaine(): ?string
-    {
-        return $this->domaine;
-    }
-
-    public function setDomaine(string $domaine): self
-    {
-        $this->domaine = $domaine;
-
-        return $this;
-    }
-
-    public function getMedecin(): ?string
-    {
-        return $this->medecin;
-    }
-
-    public function setMedecin(string $medecin): self
-    {
-        $this->medecin = $medecin;
-
-        return $this;
-    }
-
     public function getUser(): ?User
     {
         return $this->user;
@@ -79,8 +52,16 @@ class Visite
         return $this;
     }
 
-    public function __toString(): string
+    public function getCategorie(): ?Categorie
     {
-        return $this->domaine;
+        return $this->categorie;
     }
+
+    public function setCategorie(?Categorie $categorie): self
+    {
+        $this->categorie = $categorie;
+
+        return $this;
+    }
+
 }

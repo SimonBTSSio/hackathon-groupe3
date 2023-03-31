@@ -6,6 +6,7 @@ use App\Repository\MedecinRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\Nullable;
 
 #[ORM\Entity(repositoryClass: MedecinRepository::class)]
 class Medecin
@@ -19,13 +20,17 @@ class Medecin
     private ?string $nom = null;
 
     #[ORM\Column(length: 100)]
-    private ?string $prenom = null;
+    private ?string $prenom = Nullable::class;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\ManyToMany(targetEntity: Categorie::class, inversedBy: 'medecins')]
-    private Collection $categorie;
+    /**
+     * @ORM\ManyToOne(targetEntity=Categorie::class, inversedBy="medecins", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $categorie;
+
 
     public function __construct()
     {
@@ -95,5 +100,10 @@ class Medecin
         $this->categorie->removeElement($categorie);
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->getNom() . ' ' . $this->getPrenom();
     }
 }

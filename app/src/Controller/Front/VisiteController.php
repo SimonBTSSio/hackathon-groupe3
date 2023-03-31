@@ -2,8 +2,14 @@
 
 namespace App\Controller\Front;
 
+use App\Entity\Categorie;
 use App\Entity\Visite;
+use App\Entity\Medecin;
+use App\Form\CategorieType;
+use App\Form\MedecinType;
 use App\Form\VisiteType;
+use App\Repository\CategorieRepository;
+use App\Repository\MedecinRepository;
 use App\Repository\VisiteRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,7 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/visite')]
 class VisiteController extends AbstractController
 {
-    #[Route('/', name: 'visite_index', methods: ['GET'])]
+    #[Route('/', name: 'app_visite_index', methods: ['GET'])]
     public function index(VisiteRepository $visiteRepository): Response
     {
         return $this->render('front/visite/index.html.twig', [
@@ -32,22 +38,37 @@ class VisiteController extends AbstractController
     }
 
     #[Route('/new', name: 'new_visite', methods: ['GET', 'POST'])]
-    public function new(Request $request, VisiteRepository $visiteRepository): Response
+    public function new(Request $request, VisiteRepository $visiteRepository, CategorieRepository $categorieRepository, MedecinRepository $medecinRepository): Response
     {
         $visite = new Visite();
         $form = $this->createForm(VisiteType::class, $visite);
         $form->handleRequest($request);
-        $visite->setUser($this->getUser());
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        $categorie = new Categorie();
+        $formCategorie = $this->createForm(CategorieType::class, $categorie);
+        $formCategorie->handleRequest($request);
+        $medecin = new Medecin();
+        $formMedecin = $this->createForm(MedecinType::class,$medecin);
+        $formMedecin->handleRequest($request);
+
+        $categorie->addMedecin($medecin);
+        $visite->setUser($this->getUser());
+        $visite->setCategorie($categorie);
+
+        if ($form->isSubmitted() && $form->isValid() && $formCategorie->isSubmitted() && $formCategorie->isValid() && $formMedecin->isSubmitted() && $formMedecin->isValid()) {
+            $medecinRepository->save($medecin, true);
+            $categorieRepository->save($categorie, true);
             $visiteRepository->save($visite, true);
 
-            return $this->redirectToRoute('front_visite_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('front_app_visite_index', [], Response::HTTP_SEE_OTHER);
         }
+
 
         return $this->renderForm('front/visite/new.html.twig', [
             'visite' => $visite,
             'form' => $form,
+            'formCategorie' => $formCategorie,
+            'formMedecin' => $formMedecin,
         ]);
     }
 
@@ -68,7 +89,7 @@ class VisiteController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $visiteRepository->save($visite, true);
 
-            return $this->redirectToRoute('visite_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('front_visite_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('front/visite/edit.html.twig', [
@@ -84,7 +105,7 @@ class VisiteController extends AbstractController
             $visiteRepository->remove($visite, true);
         }
 
-        return $this->redirectToRoute('visite_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('front_visite_index', [], Response::HTTP_SEE_OTHER);
     }
 
 }

@@ -13,8 +13,7 @@ class VisiteType extends AbstractType
     {
         $builder
             ->add('date')
-            ->add('domaine')
-            ->add('medecin')
+
         ;
     }
 
