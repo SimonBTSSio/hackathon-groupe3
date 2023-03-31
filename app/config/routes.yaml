@@ -23,3 +23,7 @@ controllers_doctor:
 controller_register:
     resource: ../src/Controller/RegistrationController.php
     type: attribute
+
+controller_landing:
+    resource: ../src/Controller/LandingController.php
+    type: attribute

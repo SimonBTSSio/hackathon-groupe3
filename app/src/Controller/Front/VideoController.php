@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Back;
+namespace App\Controller\Front;
 
 use App\Entity\Video;
 use App\Repository\VideoRepository;
