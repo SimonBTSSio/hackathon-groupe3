@@ -24,6 +24,7 @@ class DoctorController extends AbstractController
     {
         return $this->render('front/doctor/index.html.twig', [
             'doctors' => $userRepository->findDoctors(),
+            'user' => $userRepository->findBy(array('id' => $user->getId())),
         ]);
     }
 
