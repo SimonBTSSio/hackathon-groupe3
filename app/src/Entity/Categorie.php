@@ -21,9 +21,13 @@ class Categorie
     #[ORM\ManyToMany(targetEntity: Medecin::class, mappedBy: 'categorie')]
     private Collection $medecins;
 
+    #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Visite::class)]
+    private Collection $visites;
+
     public function __construct()
     {
         $this->medecins = new ArrayCollection();
+        $this->visites = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -68,5 +72,40 @@ class Categorie
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Visite>
+     */
+    public function getVisites(): Collection
+    {
+        return $this->visites;
+    }
+
+    public function addVisite(Visite $visite): self
+    {
+        if (!$this->visites->contains($visite)) {
+            $this->visites->add($visite);
+            $visite->setCategorie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVisite(Visite $visite): self
+    {
+        if ($this->visites->removeElement($visite)) {
+            // set the owning side to null (unless already changed)
+            if ($visite->getCategorie() === $this) {
+                $visite->setCategorie(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->libelle;
     }
 }

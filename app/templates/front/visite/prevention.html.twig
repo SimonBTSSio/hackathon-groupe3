@@ -9,7 +9,6 @@
 {% for visite in visites %}
     {% if visite.date > date('now') %}
         {{ visite.date|date('d/m/Y') }}
-        {{ visite.domaine }}
         {{ visite.medecin }}
     {% endif %}
 {% endfor %}
@@ -22,7 +21,6 @@
     {% for visite in visites %}
         {% if visite.date < date('now') %}
             {{ visite.date|date('d/m/Y') }}
-            {{ visite.domaine }}
             {{ visite.medecin }}
         {% endif %}
     {% endfor %}
