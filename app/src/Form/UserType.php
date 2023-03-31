@@ -76,16 +76,6 @@ class UserType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('description', TextareaType::class, [
-                'label' => 'La description',
-                'constraints' => [
-                    new Length([
-                        'min' => 2,
-                        'minMessage' => 'La description doit comporter au moins {{ limit }} caractères'
-                    ]),
-                ],
-                'required'   => false,
-            ])
         ;
         
         $builder->get('roles')
