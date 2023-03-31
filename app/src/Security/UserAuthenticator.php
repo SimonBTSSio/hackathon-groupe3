@@ -22,6 +22,7 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
     use TargetPathTrait;
 
     public const LOGIN_ROUTE = 'app_login';
+    private $userRepository;
 
     public function __construct(private UrlGeneratorInterface $urlGenerator, UserRepository $userRepository)
     {
@@ -51,9 +52,8 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
-        $email = $request->request->get('email', '');
   
-        $user = $this->userRepository->findOneBy(array('email' => $email)); // Find the user in the database based on the email address
+        $user = $token->getUser(); // Find the user in the database based on the email address
 
         if (implode($user->getRoles()) == "ROLE_ADMIN") {
             return new RedirectResponse($this->urlGenerator->generate('back_default_index'));
