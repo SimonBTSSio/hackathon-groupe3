@@ -40,6 +40,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
+    #[ORM\Column(type: 'boolean')]
+    private $isNotify = true;
+
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Visite::class)]
     private Collection $visite;
 
@@ -207,4 +210,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function getIsNotify(): ?string
+    {
+        return $this->isNotify;
+    }
+
+    public function setisNotify(string $isNotify): self
+    {
+        $this->isNotify = $isNotify;
+
+        return $this;
+    }
+    
 }

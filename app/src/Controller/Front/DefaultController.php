@@ -11,6 +11,7 @@ use App\Entity\User;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\FrontUserType;
+use App\Form\NotifyFormType;
 
 class DefaultController extends AbstractController
 {

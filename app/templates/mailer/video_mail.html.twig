@@ -1,0 +1,7 @@
+{% block body %}
+    <h1>Nouvel vidéo</h1>
+
+    <p>Bonjour {{ user.lastname }},</p>
+
+    <p>Vous pouvez retrouver notre video ici : <a href="http://127.0.0.1:8080/member/video/{{video.id}}">{{video.title}}</a></p>
+{% endblock %}

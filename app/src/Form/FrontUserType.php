@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class FrontUserType extends AbstractType
 {
@@ -65,6 +66,11 @@ class FrontUserType extends AbstractType
                     ]),
                 ],
             ])
+            ->add('isNotify', CheckboxType::class, [
+                'label' => 'Recevoir des notifications',
+                'required' => false,
+                'data' => true
+            ]);
         ;
     }
 
