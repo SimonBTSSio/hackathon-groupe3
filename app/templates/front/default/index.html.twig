@@ -19,5 +19,89 @@
         <li><a href="{{ path('front_new_visite')  }}">Créer prévention</a></li>
         <li><a href="{{ path('front_ci_new')  }}">Mes centres d'intérêt</a></li>
     </ul>
+    <br>
+    <h1>Article index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Img</th>
+                <th>Text</th>
+                <th>Link</th>
+                <th>Label link</th>
+                <th>Tags article</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for article in articles %}
+            {% for tag in article.tags %}
+                {% if tag in user_tag%}
+                    <tr>
+                        <td>{{ article.id }}</td>
+                        <td>{{ article.title }}</td>
+                        <td>{{ article.img }}</td>
+                        <td>{{ article.text }}</td>
+                        <td>{{ article.link }}</td>
+                        <td>{{ article.label }}</td>
+                        <td>
+                            {% for tag in article.tags %}
+                                <div>
+                                    {{ tag.id }} - {{ tag.label }}
+                                </div>
+                            {% endfor %}
+                        </td>
+                        <td>
+                            <a href="{{ path('back_app_article_show', {'id': article.id}) }}">show</a>
+                            <a href="{{ path('back_app_article_edit', {'id': article.id}) }}">edit</a>
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+     <h1>Video index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>CreatedAt</th>
+                <th>Tags</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for video in videos %}
+            {% for vtag in video.tags %}
+                {% if vtag in user_tag%}
+                    <tr>
+                        <td>{{ video.title }}</td>
+                        <td>{{ video.description }}</td>
+                        <td>{{ video.createdAt ? video.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                        <td>
+                            {% for vtag in video.tags %}
+                                <div>
+                                    {{ vtag.id }} - {{ vtag.label }}
+                                </div>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 </div>
 {% endblock %}
