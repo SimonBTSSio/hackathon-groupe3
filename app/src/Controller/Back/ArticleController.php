@@ -5,16 +5,28 @@ namespace App\Controller\Back;
 use App\Entity\Article;
 use App\Form\ArticleType;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use App\Entity\Tag;
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Service\FileUploader;
+use App\Security\EmailVerifier;
+use Symfony\Component\Mime\Address;
+use Symfony\Component\Mailer\MailerInterface;
 
 #[Route('/article')]
 class ArticleController extends AbstractController
 {
+    private EmailVerifier $emailVerifier;
+
+    public function __construct(EmailVerifier $emailVerifier)
+    {
+        $this->emailVerifier = $emailVerifier;
+    }
+
     #[Route('/', name: 'app_article_index', methods: ['GET'])]
     public function index(EntityManagerInterface $entityManager): Response
     {
@@ -28,7 +40,7 @@ class ArticleController extends AbstractController
     }
 
     #[Route('/new', name: 'app_article_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, MailerInterface $mailer): Response
     {
         $article = new Article();
         $form = $this->createForm(ArticleType::class, $article);
@@ -58,6 +70,23 @@ class ArticleController extends AbstractController
 
             $entityManager->persist($article);
             $entityManager->flush();
+
+            $users = $entityManager->getRepository(User::class)->findAll();
+            foreach ($users as $user) {
+                if($user->getIsNotify()){
+                    $email = (new TemplatedEmail())
+                    ->from(new Address('hackathon.groupe3@gmail.com', 'VCivuqQm2gvAJXu'))
+                    ->to($user->getEmail())
+                    ->subject('Nouvel article')
+                    ->htmlTemplate('mailer/article_mail.html.twig')
+                    ->context([
+                        'article' => $article,
+                        'user' => $user,
+                    ]);
+    
+                    $mailer->send($email);
+                }
+            }
 
             return $this->redirectToRoute('back_app_article_index', [], Response::HTTP_SEE_OTHER);
         }

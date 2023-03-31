@@ -5,41 +5,21 @@
 {% block body %}
     <h1>Article</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ article.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ article.title }}</td>
-            </tr>
-            <tr>
-                <th>Img</th>
-                <td><img src="/img/{{ article.img }}"></td>
-            </tr>
-            <tr>
-                <th>Text</th>
-                <td>{{ article.text }}</td>
-            </tr>
-            <tr>
-                <th>Link</th>
-                <td>
-                    {% if article.link != null%}
-                        <a href="{{ article.link }}">
-                            <button>{{ article.label }}</button>
-                        </a>
-                    {% endif %}
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="article">
+        <h2>{{ article.title }}</h2>
+        <img src="/img/{{ article.img }}">
+        <p>
+            {{ article.text }}
+        </p>
+        {% if article.link != null%}
+            <a href="{{ article.link }}">
+                <button>{{ article.label }}</button>
+            </a>
+        {% endif %}
+    </div>
     <h1>Tags</h1>
     {% for tag in article.tags %}
-        <div>
-            {{ tag.id }} - {{ tag.label }}
-        </div>
+        <div>{{ tag.label }}</div>
     {% endfor %}
 
     <a href="{{ path('front_app_article_index') }}">back to list</a>

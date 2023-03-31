@@ -1,48 +1,19 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-front.html.twig' %}
 
 {% block title %}Article index{% endblock %}
 
 {% block body %}
-    <h1>Article index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Img</th>
-                <th>Text</th>
-                <th>Link</th>
-                <th>Label link</th>
-                <th>Tags article</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
+    <h1>Liste des articles en ligne</h1>
+    <div class="container-article">
         {% for article in articles %}
-            <tr>
-                <td>{{ article.id }}</td>
-                <td>{{ article.title }}</td>
-                <td>{{ article.img }}</td>
-                <td>{{ article.text }}</td>
-                <td>{{ article.link }}</td>
-                <td>{{ article.label }}</td>
-                <td>
-                    {% for tag in article.tags %}
-                        <div>
-                            {{ tag.id }} - {{ tag.label }}
-                        </div>
-                    {% endfor %}
-                </td>
-                <td>
-                    <a href="{{ path('front_app_article_show', {'id': article.id}) }}">show</a>
-                </td>
-            </tr>
+            <a href="{{ path('front_app_article_show', {'id': article.id}) }}">
+                <div class="article-box">
+                    <img src="/img/{{ article.img }}">
+                    <div>{{ article.title }}</div>
+                </div>
+            </a>
         {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
+            <h2>Aucun article crée</h2>
         {% endfor %}
-        </tbody>
-    </table>
+    </div>
 {% endblock %}

@@ -1,3 +1,11 @@
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+.login{
+    background-color: lightgray;
+}
+
 form{
     margin-top: 10%!important;
     display: flex;

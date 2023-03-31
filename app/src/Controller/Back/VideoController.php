@@ -12,6 +12,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Mime\Address;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use App\Entity\User;
+use Symfony\Component\Mailer\MailerInterface;
 
 #[Route('/video')]
 class VideoController extends AbstractController
@@ -25,7 +30,7 @@ class VideoController extends AbstractController
     }
 
     #[Route('/new', name: 'app_video_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, VideoRepository $videoRepository): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, VideoRepository $videoRepository, MailerInterface $mailer): Response
     {
         $video = new Video();
         $form = $this->createForm(VideoType::class, $video);
@@ -54,6 +59,22 @@ class VideoController extends AbstractController
 
                 $video->setCreatedAt(new \DateTimeImmutable('now'));
                 $video->setVideo($newFilename);
+                $users = $entityManager->getRepository(User::class)->findAll();
+                foreach ($users as $user) {
+                    if($user->getIsNotify()){
+                        $email = (new TemplatedEmail())
+                        ->from(new Address('hackathon.groupe3@gmail.com', 'VCivuqQm2gvAJXu'))
+                        ->to($user->getEmail())
+                        ->subject('Nouvel article')
+                        ->htmlTemplate('mailer/video_mail.html.twig')
+                        ->context([
+                            'video' => $video,
+                            'user' => $user,
+                        ]);
+        
+                        $mailer->send($email);
+                    }
+                }
             }
 
             $videoRepository->save($video, true);

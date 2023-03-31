@@ -1,14 +1,11 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-front.html.twig' %}
 
 {% block title %}Adhérent{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<main>
 
-<div class="example-wrapper">
+<div class="container">
     <h1>Hello {{ user[0].firstname }} {{ user[0].lastname }}! ✅</h1>
 
     Rubriques:
@@ -20,4 +17,5 @@
         <li><a href="{{ path('front_ci_new')  }}">Mes centres d'intérêt</a></li>
     </ul>
 </div>
+</main>
 {% endblock %}
