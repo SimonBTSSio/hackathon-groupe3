@@ -1,0 +1,43 @@
+aside{
+    width: 240px;
+    background: #FCEEEC;
+    height: 100vh;
+    float: left;
+    padding: 2rem;
+}
+
+aside img{
+    width: 84px;
+    height: 50px;
+    margin-bottom: 3rem;
+}
+
+aside ul li{
+    margin-bottom: 1rem;
+}
+
+aside ul li a {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 17px;
+    color: #000000;
+    text-decoration: none;
+}
+
+aside ul li a .subtitles{
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 17px;
+}
+
+main{
+    display: flex;
+}
+
+aside .logout{
+    margin-top: 120%;
+}
+
+nav{
+    box-shadow: none;
+}
