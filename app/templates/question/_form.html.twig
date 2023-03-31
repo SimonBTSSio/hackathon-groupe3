@@ -1,0 +1,43 @@
+{{ form_start(form) }}
+    {{ form_row(form.text) }}
+    {{ form_row(form.type) }}
+
+    <div data-prototype="{{ form_widget(form.reponses.vars.prototype)|e('html_attr') }}" class="row js-reponses-wrapper w-full"
+        data-index="{{ form.reponses|length }}">
+        {% for response in form.reponses %}
+            {{ form_row(response) }}
+        {% endfor %}
+        <a href="#" class="js-reponses-add mt-5">
+            <span class="fa fa-plus-circle"></span>
+            Ajouter une réponse
+        </a>
+    </div>
+
+    {% for responseForm in form.reponses %}
+        <div class="col-xs-8">
+            {{ form_errors(responseForm) }}
+        </div>
+    {% endfor %}
+
+{{ form_end(form) }}
+
+{% block javascripts %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const wrapper = document.querySelector('.js-reponses-wrapper');
+            if (wrapper) {
+                wrapper.addEventListener('click', function(e) {
+                    const addLink = e.target.closest('.js-reponses-add');
+                    if (addLink) {
+                        e.preventDefault();
+                        const prototype = wrapper.dataset.prototype;
+                        const index = wrapper.dataset.index;
+                        const newForm = prototype.replace(/__name__/g, index);
+                        wrapper.dataset.index = parseInt(index) + 1;
+                        addLink.insertAdjacentHTML('beforebegin', newForm);
+                    }
+                });
+            }
+        });
+    </script>
+{% endblock %}

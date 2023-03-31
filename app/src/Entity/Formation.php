@@ -40,6 +40,9 @@ class Formation
     #[ORM\Column(length: 255)]
     private ?string $author = null;
 
+    #[ORM\OneToOne(mappedBy: 'formation', cascade: ['persist', 'remove'])]
+    private ?Quizz $quizz = null;
+
     public function __construct()
     {
         $this->chapter = new ArrayCollection();
@@ -160,6 +163,28 @@ class Formation
     public function setAuthor(string $author): self
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    public function getQuizz(): ?Quizz
+    {
+        return $this->quizz;
+    }
+
+    public function setQuizz(?Quizz $quizz): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($quizz === null && $this->quizz !== null) {
+            $this->quizz->setFormation(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($quizz !== null && $quizz->getFormation() !== $this) {
+            $quizz->setFormation($this);
+        }
+
+        $this->quizz = $quizz;
 
         return $this;
     }

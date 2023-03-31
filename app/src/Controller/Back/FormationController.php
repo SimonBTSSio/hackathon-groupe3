@@ -35,15 +35,16 @@ class FormationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $image = $form->get('image')->getData();
 
-           
-            $fileUploader = new FileUploader($this->getParameter('formation_img'));
-            $fileName = $fileUploader->upload($image);
+            if ($image) {
+                $fileUploader = new FileUploader($this->getParameter('formation_img'));
+                $fileName = $fileUploader->upload($image);
 
-            if($fileName) {
-                $formation->setImage($fileName);
-            }
-            else {
-                $this->addFlash('danger', 'Une erreur est survenue lors de l\'upload de l\'image');
+                if($fileName) {
+                    $formation->setImage($fileName);
+                }
+                else {
+                    $this->addFlash('danger', 'Une erreur est survenue lors de l\'upload de l\'image');
+                }
             }
 
             $formation->setCreatedAt(new \DateTimeImmutable());
