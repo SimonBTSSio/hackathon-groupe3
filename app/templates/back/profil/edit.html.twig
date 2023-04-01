@@ -1,11 +1,20 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-back.html.twig' %}
 
 {% block title %}Modifier mon profil{% endblock %}
 
 {% block body %}
-    <h1>Modifier mon profil</h1>
+    <div class="from-green-50 to-cyan-100">  
+        <div class="container m-auto px-6 text-gray-600 md:px-12 xl:px-6">
+            <h1 class="text-3xl text-black pb-6">Modifier mon profil</h1>
 
-    {{ include('back/user/_form.html.twig', {'button_label': 'Modifier'}) }}
+            {{ include('back/profil/_form.html.twig', {'button_label': 'Modifier'}) }}
+            <br>
 
-    <a href="{{ path('back_default_index') }}">Retour</a>
+            <div class="max-w-sm w-24 bg-white shadow sm:rounded-md overflow-hidden">
+                <div class="px-6 py-4">
+                    <a href="{{ path('back_default_index') }}" class="no-underline hover:underline ...">Retour</a>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
