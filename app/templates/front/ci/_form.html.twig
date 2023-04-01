@@ -1,4 +1,30 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    <div class="mt-10 sm:mt-0">
+        <div class="md:grid md:grid-cols-3 md:gap-6">
+            <div class="mt-5 md:col-span-2 md:mt-0">
+            <form name="mission" method="POST">
+                <div class="overflow-hidden shadow sm:rounded-md">
+                <div class="bg-white px-4 py-5 sm:p-6">
+                    <div class="grid grid-cols-6 gap-6">
+                    <div class="col-span-6 sm:col-span-4">
+                        {{ form_row(form.tags, {
+                            'label_attr': {
+                                'class': 'block mb-2 text-sm font-medium text-gray-900 dark:text-white'
+                            },
+                            'attr': {
+                                'class': 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500',
+                                'placeholder': "La type de mission"
+                            },
+                        }) }}
+                    </div>
+                </div>
+                 {{ form_widget(form) }}
+                <div class="bg-white px-4 py-3 text-right sm:px-6">
+                    <button type="submit" class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">{{ button_label|default('Sauvegarder') }}</button>
+                </div>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
 {{ form_end(form) }}

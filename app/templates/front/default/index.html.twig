@@ -4,18 +4,106 @@
 
 {% block body %}
 <main>
+   <div class="from-green-50 to-cyan-100">  
+    <div class="container m-auto px-6 text-gray-600 md:px-12 xl:px-6">
 
-<div class="container">
-    <h1>Hello {{ user[0].firstname }} {{ user[0].lastname }}! ✅</h1>
+        <div class="flex flex-col p-10">
+            <h2 class="mb-4 text-2xl text-black font-bold">Bénéficiaire</h2>
 
-    Rubriques:
-    <ul>
-        <li><a href="{{ path('front_edit', {'id': user[0].id}) }}">Modifier mon profil</a></li>
-        <li><a href="{{ path('front_doctor_default_index') }}">Les Médecins</a></li>
-        <li><a href="{{ path('front_visite_prevention') }}">Page prévention</a></li>
-        <li><a href="{{ path('front_new_visite')  }}">Créer prévention</a></li>
-        <li><a href="{{ path('front_ci_new')  }}">Mes centres d'intérêt</a></li>
-    </ul>
+            <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
+                <div class="flex items-start rounded-xl bg-blue-300 p-4 shadow-lg">
+
+                    <div class="ml-4 text-white">
+                        <h2 class="font-semibold">{{ user[0].firstname }}</h2><br>
+                        <button class="inline-flex items-center justify-center w-10 h-10 mr-2 text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-full focus:shadow-outline hover:bg-indigo-800">
+                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" fill-rule="evenodd"></path></svg>
+                        </button> Ajouter un bénéficiaire
+                    </div>
+                </div>
+
+                <div class="flex items-start rounded-xl bg-red-400 p-4 shadow-lg items-center justify-center text-white">
+
+                    <div class="ml-4">
+                        <p class="text-sm">DERNIERS REMBOURSEMENT</p>
+                        <h2 class="mt-4 font-semibold">346.67€</h2>
+                        <p class="text-sm">Lunettes - Dr Alri</p>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="flex flex-col p-10">
+            <h2 class="mb-4 text-2xl text-black font-bold">Actualités</h2>
+
+            <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+               {% for article in articles %}
+                {% for tag in article.tags %}
+                    {% if tag in user_tag%}
+                        <!--Card 1-->
+                        <div class="rounded overflow-hidden shadow-lg">
+                        <img class="object-cover h-48 w-96" src="/img/{{ article.img }}" alt="Mountain">
+                        <div class="px-6 py-4">
+                            <div class="font-bold text-xl mb-2">{{ article.title }}</div>
+                            <p class="text-gray-700 text-base">
+                            {{ article.text }}
+                            </p>
+                        </div>
+                        <div class="px-6 pt-4 pb-2">
+                            {% for tag in article.tags %}
+                                <div>
+                                    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#{{ tag.label }}</span>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="6">no records found</td>
+                </tr>
+            {% endfor %}
+            </div>
+        </div>
+
+        <div class="flex flex-col p-10">
+            <h2 class="mb-4 text-2xl text-black font-bold">Ma santé</h2>
+
+            <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+               {% for video in videos %}
+                {% for vtag in video.tags %}
+                    {% if vtag in user_tag%}
+                        <!--Card 1-->
+                        <div class="rounded overflow-hidden shadow-lg">
+                        <video class="object-cover h-48 w-96" width="320" height="240" controls>
+                            <source src="{{ path('front_app_video_show_video', {'id': video.id}) }}" type="video/mp4">
+                        </video>
+                        <div class="px-6 py-4">
+                            <div class="font-bold text-xl mb-2">{{ video.title }}</div>
+                            <p class="text-gray-700 text-base">
+                            {{ video.description }}
+                            </p>
+                        </div>
+                        <div class="px-6 pt-4 pb-2">
+                            {% for vtag in video.tags %}
+                                <div>
+                                    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#{{ vtag.label }}</span>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="6">no records found</td>
+                </tr>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+  </div>
 </div>
 </main>
 {% endblock %}
