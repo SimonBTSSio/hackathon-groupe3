@@ -6,7 +6,7 @@ body {
     background-color: lightgray;
 }
 
-form{
+.form{
     margin-top: 10%!important;
     display: flex;
     flex-direction: column;

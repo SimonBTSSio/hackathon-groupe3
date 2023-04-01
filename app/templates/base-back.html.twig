@@ -18,18 +18,18 @@
     </head>
     <body>
         <aside>
-            <img src="{{ asset('/build/images/Logo.png') }}" alt="logo" class="logo">
+            <img src="{{ asset('build/images/logo.png') }}" alt="logo" class="logo">
             <ul>
-                <li><a href="{{ path('front_doctor_default_index') }}">Les médecins<br>
-                <span class="subtitles">Voir les médecins</span></a></li>
-                <li><a href="{{ path('front_edit', {'id': user[0].id}) }}">Mon profil<br>
-                <span class="subtitles">Modifier mon profil</span></a></li>
-                <li><a href="{{ path('front_ci_new')  }}">Mes centres d'intérêt<br>
-                <span class="subtitles">Centres d'intérêt</span></a></li>
-                <li><a href="{{ path('front_formations')  }}">Ma santé<br>
+                <li><a href="{{ path('back_user_index') }}">Les utilisateurs<br>
+                <span class="subtitles"></span></a></li>
+                <li><a href="{{ path('back_app_article_index')  }}">Les articles<br>
+                <span class="subtitles">Articles</span></a></li>
+                <li><a href="{{ path('back_app_video_index')  }}">Les vidéos<br>
+                <span class="subtitles">Vidéos</span></a></li>
+                <li><a href="{{ path('back_formation_index') }}">Les formations<br>
                 <span class="subtitles">Formations</span></a></li>
-                <li><a href="{{ path('front_visite_prevention') }}">Prévention<br>
-                <span class="subtitles">Trouvez un médecin</span></a></li>
+                <li><a href="{{ path('back_edit', {'id': user_admin[0].id}) }}">Mon profil<br>
+                <span class="subtitles">Modifier mon profil</span></a></li>
             </ul>
             <div class="logout">
                 <a href="/logout">
@@ -47,7 +47,7 @@
                 </a>
         </aside>
         <nav>
-            <h1>BONJOUR {{ user[0].firstname }}!</h1>
+            <h1>BONJOUR {{ user_admin[0].firstname }}!</h1>
             <div>
                 <svg width="104" height="51" viewBox="0 0 104 51" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <rect x="38" width="27" height="27" fill="url(#pattern0)"/>
@@ -61,7 +61,6 @@
                 </svg>
             </div>
         </nav>
-        
         {% block body %}{% endblock %}
     </body>
 </html>

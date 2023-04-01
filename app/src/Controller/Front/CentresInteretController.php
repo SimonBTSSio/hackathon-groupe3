@@ -28,7 +28,7 @@ class CentresInteretController extends AbstractController
         }
 
         return $this->renderForm('front/ci/new.html.twig', [
-            'user' => $user,
+            'user' => $userRepository->findBy(array('id' => $user->getId())),
             'form' => $form,
         ]);
     }

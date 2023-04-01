@@ -24,6 +24,7 @@ class DoctorController extends AbstractController
     {
         return $this->render('front/doctor/index.html.twig', [
             'doctors' => $userRepository->findDoctors(),
+            'user' => $userRepository->findBy(array('id' => $user->getId())),
         ]);
     }
 
@@ -56,6 +57,7 @@ class DoctorController extends AbstractController
         return $this->renderForm('front/doctor/assign.html.twig', [
             'doctor' => $userRepository->findOneBy(array('id' => $id)),
             'form' => $form,
+            'user' => $userRepository->findBy(array('id' => $user->getId())),
         ]);
     }
 }
