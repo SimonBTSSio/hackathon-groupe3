@@ -1,21 +1,28 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-front.html.twig' %}
 
 {% block title %}Nos formations{% endblock %}
 
 {% block body %}
-    <h1 class="text-xl font-bold">FORMATION</h1>
-
-    <div class="grid grid-cols-4 gap-4">
-        {% for formation in formations %}
-            <a href="{{ path('front_formation_show', {'id': formation.id}) }}">
-                <div class="relative">
-                    <img class="rounded-tl-lg rounded-br-lg" src="/img/formation/{{ formation.image }}">
-                    <div class="absolute bottom-0 left-0 rounded-bl-lg rounded-tr-lg p-2">
-                        <h2 class="text-lg font-bold text-white overflow-hidden">{{ formation.title }}</h2>
-                    </div>
-                </div>
-            </a>
-        {% endfor %}
+    <div class="py-16">
+        <div class="container m-auto px-6 text-gray-600 md:px-12 xl:px-6">
+            <div class="m-auto pl-56">
+                <h2 class="text-xl font-bold md:text-xl">FORMATION</h2>
+            </div>
+            <div class="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 gap-4">
+        
+                {% for formation in formations %}
+                    <a href="{{ path('front_formation_show', {'id': formation.id}) }}">
+                        <div class="relative hover:scale-105 transition-all duration-500 cursor-pointer">
+                            <img class="rounded-tl-lg rounded-br-lg" src="/img/formation/{{ formation.image }}">
+                            <div class="absolute bottom-0 left-0 rounded-bl-lg rounded-tr-lg p-2">
+                                <h2 class="text-lg font-bold text-white overflow-hidden">{{ formation.title }}</h2>
+                            </div>
+                        </div>
+                    </a>
+                {% endfor %}
+            
+            </div>
+        </div>
     </div>
 
 {% endblock %}

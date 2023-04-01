@@ -39,6 +39,17 @@ class ReponseRepository extends ServiceEntityRepository
         }
     }
 
+    function countBy(array $field)
+    {
+        $qb = $this->createQueryBuilder('r');
+        $qb->select('count(r.id)');
+        foreach ($field as $key => $value) {
+            $qb->andWhere('r.' . $key . ' = :' . $key);
+            $qb->setParameter($key, $value);
+        }
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
 //    /**
 //     * @return Reponse[] Returns an array of Reponse objects
 //     */
