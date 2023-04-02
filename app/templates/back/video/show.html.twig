@@ -3,36 +3,29 @@
 {% block title %}Video{% endblock %}
 
 {% block body %}
-    <h1>Video</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Title</th>
-                <td>{{ video.title }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ video.description }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ video.createdAt ? video.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>UpdatedAt</th>
-                <td>{{ video.updatedAt ? video.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="mx-10">
+        <video class="w-full" height="400" controls>
+            <source src="{{ path('back_app_video_show_video', {'id': video.id}) }}" type="video/mp4">
+        </video>
 
-    <video width="320" height="240" controls>
-        <source src="{{ path('back_app_video_show_video', {'id': video.id}) }}" type="video/mp4">
-    </video>
+        <p class="text-center mt-10">{{ video.description }}</p>
 
-    <a href="{{ path('back_app_video_index') }}">back to list</a>
+        <div class="mt-10">
+            {% for tag in video.tags %}
+                <div class="p-4 rounded-lg border border-solid border-gray-500 w-fit">
+                    #{{ tag.label }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 
-    <a href="{{ path('back_app_video_edit', {'id': video.id}) }}">edit</a>
+    <div class="flex space-x-4 mt-10 mx-10 justify-end">
+
+        <a class="p-4 rounded-lg border-gray-500 border border-solid" href="{{ path('back_app_video_index') }}">Retourner aux vidéos</a>
+
+        <a class="p-4 rounded-lg border-gray-500 border border-solid bg-blue-500" href="{{ path('back_app_video_edit', {'id': video.id}) }}">Modifier</a>
+    </div>
 
     {{ include('back/video/_delete_form.html.twig') }}
 {% endblock %}

@@ -1,4 +1,39 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+
+<div class="mb-4">
+    {{ form_label(form.title, null, {'class': 'block font-bold mb-2 font-bold'}) }}
+    {{ form_widget(form.title, {'attr': {'class': 'form-input w-full rounded-md py-2 px-3', 'placeholder': 'Title'}}) }}
+</div>
+
+<div class="mb-4">
+    {{ form_label(form.description, null, {'class': 'block font-bold mb-2 font-bold	'}) }}
+    {{ form_widget(form.description, {'attr': {'class': 'form-input w-full rounded-md py-2 px-3', 'placeholder': 'Description'}}) }}
+</div>
+
+{{ form_label(form.video, null, {'class': 'block font-bold mb-2'}) }}
+<div class="mb-16 flex justify-center">
+    <div class="relative">
+        {{ form_widget(form.video, {'attr': {'class': 'hidden'}}) }}
+        <div class="absolute right-0 top-0 mt-2 mr-2">
+            <label for="{{ form.video.vars.id }}" class="w-max cursor-pointer inline-flex items-center px-4 py-2 bg-blue-500 hover:bg-blue-700 text-white font-bold rounded">
+                Choose file
+            </label>
+        </div>
+    </div>
+    {% if form.video.vars.errors|length > 0 %}
+        <div class="text-red-500 mt-1">{{ form_errors(form.video) }}</div>
+    {% endif %}
+</div>
+
+<div class="mb-4">
+    {{ form_label(form.tags, null, {'class': 'block font-bold mb-2 font-bold	'}) }}
+    {{ form_widget(form.tags, {'attr': {'class': 'form-multiselect w-full rounded-md py-2 px-3'}}) }}
+</div>
+
+<button class="btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+    {{ button_label|default('Save') }}
+</button>
+
 {{ form_end(form) }}
+
+
