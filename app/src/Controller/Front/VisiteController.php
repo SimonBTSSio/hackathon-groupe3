@@ -15,30 +15,34 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\UserRepository;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[Route('/visite')]
 class VisiteController extends AbstractController
 {
     #[Route('/', name: 'app_visite_index', methods: ['GET'])]
-    public function index(VisiteRepository $visiteRepository): Response
+    public function index(VisiteRepository $visiteRepository, UserRepository $userRepository, UserInterface $user): Response
     {
         return $this->render('front/visite/index.html.twig', [
             'visites' => $visiteRepository->findAll(),
+            'user' => $userRepository->findBy(array('id' => $user->getId())),
         ]);
     }
 
     #[Route('/visite_prevention', name: 'visite_prevention', methods: ['GET'])]
-    public function prevention(VisiteRepository $visiteRepository): Response
+    public function prevention(VisiteRepository $visiteRepository, UserRepository $userRepository, UserInterface $user): Response
     {
         $visites = $visiteRepository->findBy(array('user' => $this->getUser()));
 
         return $this->render('front/visite/prevention.html.twig', [
             'visites' => $visites,
+            'user' => $userRepository->findBy(array('id' => $user->getId())),
         ]);
     }
 
     #[Route('/new', name: 'new_visite', methods: ['GET', 'POST'])]
-    public function new(Request $request, VisiteRepository $visiteRepository, CategorieRepository $categorieRepository, MedecinRepository $medecinRepository): Response
+    public function new(Request $request, VisiteRepository $visiteRepository, CategorieRepository $categorieRepository, MedecinRepository $medecinRepository, UserRepository $userRepository, UserInterface $user): Response
     {
         $visite = new Visite();
         $form = $this->createForm(VisiteType::class, $visite);
@@ -69,19 +73,21 @@ class VisiteController extends AbstractController
             'form' => $form,
             'formCategorie' => $formCategorie,
             'formMedecin' => $formMedecin,
+            'user' => $userRepository->findBy(array('id' => $user->getId())),
         ]);
     }
 
     #[Route('/{id}', name: 'visite_show', methods: ['GET'])]
-    public function show(Visite $visite): Response
+    public function show(Visite $visite, UserRepository $userRepository, UserInterface $user): Response
     {
         return $this->render('front/visite/show.html.twig', [
             'visite' => $visite,
+            'user' => $userRepository->findBy(array('id' => $user->getId())),
         ]);
     }
 
     #[Route('/{id}/edit', name: 'visite_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Visite $visite, VisiteRepository $visiteRepository): Response
+    public function edit(Request $request, Visite $visite, VisiteRepository $visiteRepository, UserRepository $userRepository, UserInterface $user): Response
     {
         $form = $this->createForm(VisiteType::class, $visite);
         $form->handleRequest($request);
@@ -95,6 +101,7 @@ class VisiteController extends AbstractController
         return $this->renderForm('front/visite/edit.html.twig', [
             'visite' => $visite,
             'form' => $form,
+            'user' => $userRepository->findBy(array('id' => $user->getId())),
         ]);
     }
 
