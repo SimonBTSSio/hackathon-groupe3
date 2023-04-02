@@ -16,6 +16,7 @@ Dans le cadre du Hackathon, nous avons repondue à la demande du client en faisa
 
 
 ## Installation du projet
+Avant de commencer, veuillez mettre le .env présent dans le dossier technique, dans le dossier app/
 
 Pour installer notre projet vous aurez besoin de :
  - docker / docker-compose
