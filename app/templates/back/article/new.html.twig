@@ -1,11 +1,21 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-back.html.twig' %}
 
-{% block title %}New Article{% endblock %}
+{% block title %}Créer un article{% endblock %}
 
 {% block body %}
-    <h1>Create new Article</h1>
+    <div class="from-green-50 to-cyan-100">  
+        <div class="container m-auto px-6 text-gray-600 md:px-12 xl:px-6">
+             <h1 class="text-3xl text-black pb-6">Créer un article</h1>
 
-    {{ include('back/article/_form.html.twig') }}
+            {{ include('back/article/_form.html.twig') }}
 
-    <a href="{{ path('back_app_article_index') }}">back to list</a>
+
+            <br>
+            <div class="max-w-sm w-24 bg-white shadow sm:rounded-md overflow-hidden">
+                <div class="px-6 py-4">
+                    <a href="{{ path('back_app_article_index') }}" class="no-underline hover:underline ...">Retour</a>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
