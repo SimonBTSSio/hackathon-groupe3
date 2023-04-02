@@ -5,6 +5,8 @@ namespace App\Controller\Back;
 use App\Entity\Question;
 use App\Form\QuestionType;
 use App\Repository\QuestionRepository;
+use App\Repository\UserRepository;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +24,7 @@ class QuestionController extends AbstractController
     }
 
     #[Route('/new', name: 'question_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, QuestionRepository $questionRepository): Response
+    public function new(Request $request, QuestionRepository $questionRepository, UserRepository $userRepository, UserInterface $user): Response
     {
         $question = new Question();
         $form = $this->createForm(QuestionType::class, $question);
@@ -37,6 +39,7 @@ class QuestionController extends AbstractController
         return $this->renderForm('question/new.html.twig', [
             'question' => $question,
             'form' => $form,
+            'user_admin' => $userRepository->findBy(array('id' => $user->getId())),
         ]);
     }
 
@@ -49,7 +52,7 @@ class QuestionController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'question_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Question $question, QuestionRepository $questionRepository): Response
+    public function edit(Request $request, Question $question, QuestionRepository $questionRepository, UserRepository $userRepository, UserInterface $user): Response
     {
         $form = $this->createForm(QuestionType::class, $question);
         $form->handleRequest($request);
@@ -63,6 +66,7 @@ class QuestionController extends AbstractController
         return $this->renderForm('question/edit.html.twig', [
             'question' => $question,
             'form' => $form,
+            'user_admin' => $userRepository->findBy(array('id' => $user->getId())),
         ]);
     }
 

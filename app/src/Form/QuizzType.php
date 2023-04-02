@@ -27,7 +27,7 @@ class QuizzType extends AbstractType
                 'placeholder' => 'Choisissez une formation',
                 'attr' => [
                     'class' => 'form-control'
-                ]
+                ],
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Créer le quizz',

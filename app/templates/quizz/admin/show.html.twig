@@ -1,0 +1,83 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Quizz{% endblock %}
+
+{% block body %}
+    <div class="flex flex-wrap -mx-3 px-3">
+        <a href="{{ path('back_formation_index') }}">Retour</a>
+    </div>
+
+    <div class="overflow-hidden">
+        <div class="px-4 py-5 sm:px-6">
+            <h3 class="text-lg font-medium leading-6 text-gray-900">{{ quizz.name }} 
+                <span class="text-sm text-hackorange">
+                <a href="{{ path('back_quizz_edit', {'id': quizz.id}) }}">Modifier</a><span>
+            </h3>
+            <p class="mt-1 max-w-2xl text-sm text-gray-500">Lié à la formation : {{ quizz.formation.title }}</p>
+        </div>
+        <div class="border-t border-gray-200">
+            <dl>
+            <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <dt class="text-sm font-medium text-gray-500">Nombre questions</dt>
+                <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{{ quizz.questions|length }}</dd>
+            </div>
+            </dl>
+        </div>
+    </div>
+
+    <div class="from-green-50 to-cyan-100">  
+        <div class="container m-auto px-6 text-gray-600 md:px-12 xl:px-6">
+            <div class="w-full mt-12">
+                <div class="flex flex-wrap -mx-3">
+                    <div class="flex-none w-full max-w-full px-3">
+                        <div class="flex gap-4 justify-between mb-8">
+                            <h1 class="text-3xl text-black">Questions du quizz</h1>
+                            <a href="{{ path('back_quizz_add_question', {'id': quizz.id}) }}" class="bg-hackorange hover:bg-hackorange2 text-white px-4 py-2 rounded-tl-lg rounded-br-lg">
+                                <button>Ajouter une question</button>
+                            </a>
+                        </div>
+                            <!-- component -->
+                            <div class="overflow-x-auto rounded-lg border border-gray-200 shadow-md">
+                                <table class="w-full border-collapse bg-white text-left text-sm text-gray-500">
+                                    <thead class="bg-hackorange">
+                                        <tr>
+                                            <th scope="col" class="px-6 py-4 font-medium text-white"></th>
+                                            <th scope="col" class="px-6 py-4 font-medium text-white">Question</th>
+                                            <th scope="col" class="px-6 py-4 font-medium text-white">Type</th>
+                                            <th scope="col" class="px-6 py-4 font-medium text-white">Réponses</th>
+                                            <th scope="col" class="px-6 py-4 font-medium text-white">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-gray-100 border-t border-gray-100">
+                                        {% for question in quizz.questions %}
+                                            <tr class="hover:bg-gray-50">
+                                                <td class="px-6 py-4">{{ question.id }}</td>
+                                                <td class="px-6 py-4 text-hackorange">{{ question.text}}</td>
+                                                <td class="px-6 py-4">{{ question.type }}</td>
+                                                <td class="px-6 py-4">
+                                                    {% for answer in question.reponses %}
+                                                        {% if answer.iscorrect %}
+                                                        <p class="text-green-500">{{ answer.text }}</p>
+                                                        {% else %}
+                                                        <p>{{ answer.text }}</p>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                <td class="px-6 py-4">
+                                                    <a href="{{ path('back_question_edit', {'id': question.id}) }}">Modifier</a>
+                                                    {{ include('quizz/admin/_delete_form.html.twig') }}
+                                                </td>
+                                            </tr>
+                                        {% else %}
+                                            <tr>
+                                                <td colspan="11">Pas encore de question.</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
