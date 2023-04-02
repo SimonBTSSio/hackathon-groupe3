@@ -17,20 +17,23 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use App\Entity\User;
 use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
+use App\Repository\UserRepository;
 
 #[Route('/video')]
 class VideoController extends AbstractController
 {
     #[Route('/', name: 'app_video_index', methods: ['GET'])]
-    public function index(VideoRepository $videoRepository): Response
+    public function index(VideoRepository $videoRepository, UserRepository $userRepository, UserInterface $user): Response
     {
         return $this->render('back/video/index.html.twig', [
             'videos' => $videoRepository->findAll(),
+            'user_admin' => $userRepository->findBy(array('id' => $user->getId())),
         ]);
     }
 
     #[Route('/new', name: 'app_video_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, VideoRepository $videoRepository, MailerInterface $mailer): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, VideoRepository $videoRepository, MailerInterface $mailer, UserRepository $userRepository, UserInterface $user_admin): Response
     {
         $video = new Video();
         $form = $this->createForm(VideoType::class, $video);
@@ -85,14 +88,16 @@ class VideoController extends AbstractController
         return $this->renderForm('back/video/new.html.twig', [
             'video' => $video,
             'form' => $form,
+            'user_admin' => $userRepository->findBy(array('id' => $user_admin->getId())),
         ]);
     }
 
     #[Route('/{id}', name: 'app_video_show_details', methods: ['GET'])]
-    public function show(Video $video): Response
+    public function show(Video $video, UserRepository $userRepository, UserInterface $user): Response
     {
         return $this->render('back/video/show.html.twig', [
             'video' => $video,
+            'user_admin' => $userRepository->findBy(array('id' => $user->getId())),
         ]);
     }
 
@@ -115,7 +120,7 @@ class VideoController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_video_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Video $video, VideoRepository $videoRepository): Response
+    public function edit(Request $request, Video $video, VideoRepository $videoRepository, UserRepository $userRepository, UserInterface $user): Response
     {
         $form = $this->createForm(VideoType::class, $video);
         $form->handleRequest($request);
@@ -129,6 +134,7 @@ class VideoController extends AbstractController
         return $this->renderForm('back/video/edit.html.twig', [
             'video' => $video,
             'form' => $form,
+            'user_admin' => $userRepository->findBy(array('id' => $user->getId())),
         ]);
     }
 
