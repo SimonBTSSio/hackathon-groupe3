@@ -1,33 +1,24 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-front.html.twig' %}
+
 
 {% block title %}Video index{% endblock %}
 
 {% block body %}
-    <h1>Video index</h1>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Description</th>
-                <th>CreatedAt</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
+<div class="mx-10">
+
+    <h1 class="text-3xl text-center mt-10">Liste des vidéos</h1>
+    <div class="flex mt-10 p-4 space-x-4">
         {% for video in videos %}
-            <tr>
-                <td>{{ video.title }}</td>
-                <td>{{ video.description }}</td>
-                <td>{{ video.createdAt ? video.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('back_app_video_show_details', {'id': video.id}) }}">show</a>
-                </td>
-            </tr>
+            <div class="border border-solid border-gray-500 w-fit p-4 rounded-lg" onclick="window.location.href='{{ path('back_app_video_show_details', {'id': video.id}) }}';">
+                <img src="{{ asset('build/images/images.jpeg') }}" alt="images">
+                <p class="text-center">{{ video.title }}</p>
+            </div>
         {% else %}
             <tr>
-                <td colspan="7">no records found</td>
+                <td colspan="7">Il n'y a aucune vidéo</td>
             </tr>
         {% endfor %}
-        </tbody>
-    </table>
+
+    </div>
+</div>
 {% endblock %}
