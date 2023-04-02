@@ -1,64 +1,88 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-back.html.twig' %}
 
 {% block title %}Formation{% endblock %}
 
 {% block body %}
-    <h1>Formation</h1>
+    <div class="flex flex-wrap -mx-3 px-3">
+        <a href="{{ path('back_formation_index') }}">Retour</a>
+    </div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ formation.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ formation.title }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ formation.description }}</td>
-            </tr>
-            <tr>
-                <th>Image</th>
-                <td>{{ formation.image }}</td>
-            </tr>
-            <tr>
-                <th>Duration</th>
-                <td>{{ formation.duration }}</td>
-            </tr>
-            <tr>
-                <th>Created_at</th>
-                <td>{{ formation.createdAt ? formation.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Updated_at</th>
-                <td>{{ formation.updatedAt ? formation.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Author</th>
-                <td>{{ formation.author }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="overflow-hidden">
+        <div class="px-4 py-5 sm:px-6">
+            <h3 class="text-lg font-medium leading-6 text-gray-900">{{ formation.title }} 
+                <span class="text-sm text-hackorange">
+                <a href="{{ path('back_formation_edit', {'id': formation.id}) }}">Modifier</a><span>
+            </h3>
+            <p class="mt-1 max-w-2xl text-sm text-gray-500">Durée : {{ formation.duration }}h</p>
+        </div>
+        <div class="border-t border-gray-200">
+            <dl>
+            <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <dt class="text-sm font-medium text-gray-500">Auteur</dt>
+                <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{{ formation.author }}</dd>
+            </div>
+            <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <dt class="text-sm font-medium text-gray-500">Description</dt>
+                <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{{ formation.description|raw }}</dd>
+            </div>
+            <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <dt class="text-sm font-medium text-gray-500">Image</dt>
+                <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0"><img src="/img/formation/{{ formation.image }}" alt="image formation" width="100"></dd>
+            </div>
+            <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <dt class="text-sm font-medium text-gray-500">Crée le</dt>
+                <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{{ formation.createdAt ? formation.createdAt|date('Y-m-d H:i:s') : '' }}</dd>
+            </div>
+            <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <dt class="text-sm font-medium text-gray-500">Mis à jour le</dt>
+                <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{{ formation.updatedAt ? formation.updatedAt|date('Y-m-d H:i:s') : '' }}</dd>
+            </div>
+            </dl>
+        </div>
+    </div>
 
-    <a href="{{ path('back_formation_index') }}">back to list</a>
-
-    <a href="{{ path('back_formation_edit', {'id': formation.id}) }}">edit</a>
-
-    {{ include('formation/admin/_delete_form.html.twig') }}
-
-    <h2> Chapitres de la formation </h2>
-
-    <ul>
-        {% for chapter in formation.chapter %}
-            <li>
-                <a href="{{ path('back_chapter_show', {'id': chapter.id}) }}">{{ chapter.title }}</a>
-                <a href="{{ path('back_chapter_edit', {'id': chapter.id}) }}">edit</a>
-            </li>
-        {% endfor %}
-    </ul>
-
-    <a href="{{ path('back_formation_new_chapter', {'id': formation.id}) }}">Create new chapter</a>
-
+    <div class="from-green-50 to-cyan-100">  
+        <div class="container m-auto px-6 text-gray-600 md:px-12 xl:px-6">
+            <div class="w-full mt-12">
+                <div class="flex flex-wrap -mx-3">
+                    <div class="flex-none w-full max-w-full px-3">
+                        <div class="flex gap-4 justify-between mb-8">
+                            <h1 class="text-3xl text-black">Chapitres de la formation</h1>
+                            <a href="{{ path('back_formation_new_chapter', {'id': formation.id}) }}" class="bg-hackorange hover:bg-hackorange2 text-white px-4 py-2 rounded-tl-lg rounded-br-lg">
+                                <button>Ajouter un chapitre</button>
+                            </a>
+                        </div>
+                            <!-- component -->
+                            <div class="overflow-x-auto rounded-lg border border-gray-200 shadow-md">
+                                <table class="w-full border-collapse bg-white text-left text-sm text-gray-500">
+                                    <thead class="bg-hackorange">
+                                        <tr>
+                                            <th scope="col" class="px-6 py-4 font-medium text-white"></th>
+                                            <th scope="col" class="px-6 py-4 font-medium text-white">Titre du chapitre</th>
+                                            <th scope="col" class="px-6 py-4 font-medium text-white">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-gray-100 border-t border-gray-100">
+                                        {% for chapter in formation.chapter %}
+                                            <tr class="hover:bg-gray-50">
+                                                <td class="px-6 py-4">{{ chapter.id }}</td>
+                                                <td class="px-6 py-4 text-hackorange">{{ chapter.title }}</td>
+                                                <td class="px-6 py-4">
+                                                    <a href="{{ path('back_chapter_edit', {'id': chapter.id}) }}">Modifier</a>
+                                                    {{ include('chapter/admin/_delete_form.html.twig') }}
+                                                </td>
+                                            </tr>
+                                        {% else %}
+                                            <tr>
+                                                <td colspan="11">Pas encore de chapitre.</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

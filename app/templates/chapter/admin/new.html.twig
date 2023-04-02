@@ -1,11 +1,11 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-back.html.twig' %}
 
-{% block title %}New Chapter{% endblock %}
+{% block title %}Nouveau chapitre{% endblock %}
 
 {% block body %}
-    <h1>Create new Chapter</h1>
+    <h1 class="text-3xl text-black flex flex-wrap -mx-3 px-3 gap-2">Nouveau chapitre pour la formation <strong class="text-hackorange">{{ formation.title }}</strong></h1>
 
     {{ include('chapter/admin/_form.html.twig') }}
 
-    <a href="{{ path('back_chapter_index') }}">back to list</a>
+    <a class="flex flex-wrap -mx-3 px-3 gap-2" href="{{ path('back_formation_show', {'id': formation.id}) }}">Retour</a>
 {% endblock %}

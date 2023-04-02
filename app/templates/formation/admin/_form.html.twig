@@ -1,6 +1,74 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    <div class="mt-10 sm:mt-0">
+        <div class="">
+            <div class="mt-5 md:col-span-2 md:mt-0">
+            <form name="ability" method="POST">
+                <div class="overflow-hidden sm:rounded-md">
+                    <div class="px-4 py-5 sm:p-6">
+                        <div>
+                            <div class="col-span-6 sm:col-span-4">
+                                {{ form_row(form.title, {
+                                    'label_attr': {
+                                        'class': 'block mb-2 text-sm font-medium text-gray-900'
+                                    },
+                                    'attr': {
+                                        'class': 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5',
+                                        'placeholder': "Titre de la formation"
+                                    },
+                                }) }}
+                            </div>
+                            <div class="col-span-6 sm:col-span-4">
+                                {{ form_row(form.description, {
+                                    'label_attr': {
+                                        'class': 'block mb-2 text-sm font-medium text-gray-900'
+                                    },
+                                    'attr': {
+                                        'class': 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5',
+                                        'placeholder': "Description de la formation"
+                                    },
+                                }) }}
+                            </div>
+                            <div class="col-span-6 sm:col-span-4">
+                                {{ form_row(form.image, {
+                                    'label_attr': {
+                                        'class': 'block mb-2 text-sm font-medium text-gray-900'
+                                    },
+                                    'attr': {
+                                        'class': 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5',
+                                    },
+                                }) }}
+                            </div>
+                            <div class="col-span-6 sm:col-span-4">
+                                {{ form_row(form.author, {
+                                    'label_attr': {
+                                        'class': 'block text-sm font-medium text-gray-700'
+                                    },
+                                    'attr': {
+                                        'class': 'mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm',
+                                        'placeholder': "Auteur de la formation"
+                                    },
+                                }) }}
+                            </div>
+                            <div class="col-span-6 sm:col-span-4">
+                                {{ form_row(form.duration, {
+                                    'label_attr': {
+                                        'class': 'block mb-2 text-sm font-medium text-gray-900'
+                                    },
+                                    'attr': {
+                                        'class': 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5',
+                                        'placeholder': "Durée de la formation"
+                                    },
+                                }) }}
+                            </div>
+                        </div>
+                        {{ form_widget(form) }}
+                        <button type="submit" class="!bg-hackorange hover:!bg-hackorange2 !text-white px-4 py-2 rounded-tl-lg rounded-br-lg">{{ button_label|default('Créer') }}</button>
+                    </div>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
 {{ form_end(form) }}
 
 {% block javascripts %}

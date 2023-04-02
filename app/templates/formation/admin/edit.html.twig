@@ -1,13 +1,11 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-back.html.twig' %}
 
 {% block title %}Edit Formation{% endblock %}
 
 {% block body %}
-    <h1>Edit Formation</h1>
+    <h1 class="text-3xl text-black flex flex-wrap -mx-3 px-3 gap-2">Modifier la formation</h1>
 
     {{ include('formation/admin/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('back_formation_index') }}">Retour à la liste</a>
-
-    {{ include('formation/admin/_delete_form.html.twig') }}
+    <a class="flex flex-wrap -mx-3 px-3 gap-2" href="{{ path('back_formation_index') }}">Retour à la liste</a>
 {% endblock %}
