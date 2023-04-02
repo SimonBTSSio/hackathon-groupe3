@@ -1,0 +1,31 @@
+{% extends 'base-front.html.twig' %}
+
+{% block title %}Les Médecins{% endblock %}
+
+{% block body %}
+    <h1>Les Médecins</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Prénom</th>
+                <th>Nom</th>
+                <th>Email</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ doctor.firstname }}</td>
+                <td>{{ doctor.lastname }}</td>
+                <td>{{ doctor.email }}</td>
+                <td>
+                    <a href="">Consulter</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('front_doctor_default_index') }}">Retour</a>
+
+{% endblock %}

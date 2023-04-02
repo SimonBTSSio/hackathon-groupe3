@@ -1,0 +1,52 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Quizz index{% endblock %}
+
+{% block body %}
+    <div class="from-green-50 to-cyan-100">  
+        <div class="container m-auto px-6 text-gray-600 md:px-12 xl:px-6">
+            <div class="w-full mt-12">
+                <div class="flex flex-wrap -mx-3">
+                    <div class="flex-none w-full max-w-full px-3">
+                        <div class="flex gap-4 justify-between mb-8">
+                            <h1 class="text-3xl text-black">Les quizz</h1>
+                            <a href="{{ path('back_quizz_new') }}" class="bg-hackorange hover:bg-hackorange2 text-white px-4 py-2 rounded-tl-lg rounded-br-lg">
+                                <button>Créer un quizz</button>
+                            </a>
+                        </div>
+                            <!-- component -->
+                            <div class="overflow-x-auto rounded-lg border border-gray-200 shadow-md">
+                                <table class="w-full border-collapse bg-white text-left text-sm text-gray-500">
+                                    <thead class="bg-hackorange">
+                                        <tr>
+                                            <th scope="col" class="px-6 py-4 font-medium text-white">Nom</th>
+                                            <th scope="col" class="px-6 py-4 font-medium text-white">Questions</th>
+                                            <th scope="col" class="px-6 py-4 font-medium text-white">Formation</th>
+                                            <th scope="col" class="px-6 py-4 font-medium text-white">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-gray-100 border-t border-gray-100">
+                                        {% for quizz in quizzs %}
+                                            <tr class="hover:bg-gray-50">
+                                                <td class="px-6 py-4 text-hackorange"><a href="{{ path('back_quizz_show', {'id': quizz.id}) }}">{{ quizz.name }}</a></td>
+                                                <td class="px-6 py-4">{{ quizz.questions|length }}</td>
+                                                <td class="px-6 py-4">{{ quizz.formation.title }}</td>
+                                                <td class="px-6 py-4">
+                                                    <a href="{{ path('back_quizz_edit', {'id': quizz.formation.id}) }}">Modifier</a>
+                                                    {{ include('quizz/admin/_delete_form.html.twig') }}
+                                                </td>
+                                            </tr>
+                                        {% else %}
+                                            <tr>
+                                                <td colspan="11">Pas encore de quizz.</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

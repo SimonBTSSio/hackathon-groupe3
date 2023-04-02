@@ -1,0 +1,19 @@
+{% extends 'base-front.html.twig' %}
+
+{% block title %}Article index{% endblock %}
+
+{% block body %}
+    <h1>Liste des articles en ligne</h1>
+    <div class="container-article">
+        {% for article in articles %}
+            <a href="{{ path('front_app_article_show', {'id': article.id}) }}">
+                <div class="article-box">
+                    <img src="/img/{{ article.img }}">
+                    <div>{{ article.title }}</div>
+                </div>
+            </a>
+        {% else %}
+            <h2>Aucun article crée</h2>
+        {% endfor %}
+    </div>
+{% endblock %}

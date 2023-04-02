@@ -1,0 +1,44 @@
+{% extends 'base-front.html.twig' %}
+
+{% block title %}{{ quizz.name }}{% endblock %}
+
+{% block body %}
+<div>
+    <div class="container m-auto pl-56 text-gray-600 md:pl-56 xl:pl-56">
+    <h2 class="text-2xl font-bold">{{ quizz.name }}</h2>
+    <p class="text-sm">Lié à la formation <a href="{{ path('front_formation_show', {'id': quizz.formation.id}) }}" class="text-hackorange">{{ quizz.formation.title }}</a></p>
+        {{ form_start(form, { 'attr': { 'class': 'w-full sm:flex sm:flex-col sm:gap-4 border-none m-0 !mt-8 p-0' } }) }}
+        {% for formField in form %}
+
+            {% if formField.vars.block_prefixes[2] starts with '_form_question_' %}
+                <div class="bg-hackyellow rounded-tl-lg rounded-br-lg p-2">
+                <h3 class="text-md">{{ formField.vars.label }}</h3>
+                </div>
+                <div class="text-red-500 text-sm">
+                {{ form_errors(formField) }}
+                </div>
+
+                {% for formFieldChild in formField %}
+                    <label class="flex mb-1 gap-2">
+                    {{ form_widget(formFieldChild) }}
+                    {{ form_label(formFieldChild) }}
+                    </label>
+                {% endfor %}
+
+            {% endif %}
+        {% endfor %}
+        
+        <div class="flex">
+        {{ form_widget(form.submit, { 'attr': { 'class': '!bg-hackorange hover:!bg-hackorangebis text-white !font-medium py-2 px-4 rounded !items-center' } }) }}
+        {% if score %}
+            <h2 class="text-2xl font-bold">Score : {{ score }}/{{maxScore}}</h2>
+        {% endif %}
+        </div>
+
+        {{ form_end(form) }}
+
+
+    </div>
+</div>
+
+{% endblock %}

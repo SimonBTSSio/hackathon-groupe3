@@ -1,0 +1,84 @@
+{{ form_start(form) }}
+    <div class="mt-10 sm:mt-0">
+        <div class="">
+            <div class="mt-5 md:col-span-2 md:mt-0">
+            <form name="ability" method="POST">
+                <div class="overflow-hidden sm:rounded-md">
+                    <div class="px-4 py-5 sm:p-6">
+                        <div>
+                            <div class="col-span-6 sm:col-span-4">
+                                {{ form_row(form.text, {
+                                    'label_attr': {
+                                        'class': 'block mb-2 text-sm font-medium text-gray-900'
+                                    },
+                                    'attr': {
+                                        'class': 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5',
+                                        'placeholder': "Énoncé de la question"
+                                    },
+                                }) }}
+                            </div>
+                            <div class="col-span-6 sm:col-span-4">
+                                {{ form_row(form.type, {
+                                    'label_attr': {
+                                        'class': 'block mb-2 text-sm font-medium text-gray-900'
+                                    },
+                                    'attr': {
+                                        'class': 'text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5',
+                                        'placeholder': "Description de la formation"
+                                    },
+                                }) }}
+                            </div>
+
+                            <div data-prototype="{{ form_widget(form.reponses.vars.prototype)|e('html_attr') }}" class="row js-reponses-wrapper w-full"
+                                data-index="{{ form.reponses|length }}">
+                                {% for response in form.reponses %}
+                                    {{ form_row(response, {
+                                        'label_attr': {
+                                            'class': 'block mb-2 text-sm font-medium text-gray-900'
+                                        },
+                                        'attr': {
+                                            'class': 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5',
+                                            'placeholder': "Réponse"
+                                        },
+                                    }) }}
+                                {% endfor %}
+                                <a href="#" class="js-reponses-add mt-5 inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-hackorange bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                                    Ajouter une réponse
+                                </a>
+                            </div>
+                        </div>
+
+                            {% for responseForm in form.reponses %}
+                                <div class="col-xs-8">
+                                    {{ form_errors(responseForm) }}
+                                </div>
+                            {% endfor %}
+                        {{ form_widget(form) }}
+                    </div>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+{{ form_end(form) }}
+
+{% block javascripts %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const wrapper = document.querySelector('.js-reponses-wrapper');
+            if (wrapper) {
+                wrapper.addEventListener('click', function(e) {
+                    const addLink = e.target.closest('.js-reponses-add');
+                    if (addLink) {
+                        e.preventDefault();
+                        const prototype = wrapper.dataset.prototype;
+                        const index = wrapper.dataset.index;
+                        const newForm = prototype.replace(/__name__/g, index);
+                        wrapper.dataset.index = parseInt(index) + 1;
+                        addLink.insertAdjacentHTML('beforebegin', newForm);
+                    }
+                });
+            }
+        });
+    </script>
+{% endblock %}

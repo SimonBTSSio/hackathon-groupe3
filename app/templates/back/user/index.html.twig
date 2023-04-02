@@ -1,0 +1,65 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}La liste des utilisateurs{% endblock %}
+
+{% block body %}
+    <div class="from-green-50 to-cyan-100">  
+        <div class="container m-auto px-6 text-gray-600 md:px-12 xl:px-6">
+            <h1 class="text-3xl text-black pb-6">Les utilisateurs</h1>
+
+            <div class="w-full mt-12">
+                <div class="flex flex-wrap -mx-3">
+                    <div class="flex-none w-full max-w-full px-3">
+                        <div class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-soft-xl rounded-2xl bg-clip-border shadow-lg">
+                            <div class="p-6 pb-0 mb-0 bg-white border-b-0 border-b-solid rounded-t-2xl border-b-transparent">
+                                <h6>La liste des utilisateurs</h6>
+                            </div>
+
+                            <!-- component -->
+                            <div class="overflow-x-auto rounded-lg border border-gray-200 shadow-md m-5">
+                                <table class="w-full border-collapse bg-white text-left text-sm text-gray-500">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th scope="col" class="px-6 py-4 font-medium text-gray-900">Nom</th>
+                                            <th scope="col" class="px-6 py-4 font-medium text-gray-900">Prénom</th>
+                                            <th scope="col" class="px-6 py-4 font-medium text-gray-900">Email</th>
+                                            <th scope="col" class="px-6 py-4 font-medium text-gray-900">Roles</th>
+                                            <th scope="col" class="px-6 py-4 font-medium text-gray-900">Vérifié</th>
+                                            <th scope="col" class="px-6 py-4 font-medium text-gray-900">Notifié</th>
+                                            <th scope="col" class="px-6 py-4 font-medium text-gray-900">actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-gray-100 border-t border-gray-100">
+                                        {% for user in users %}
+                                            <tr class="hover:bg-gray-50">
+                                                <td class="px-6 py-4">{{ user.lastname }}</td>
+                                                <td class="px-6 py-4">{{ user.firstname }}</td>
+                                                <td class="px-6 py-4">{{ user.email }}</td>
+                                                <td class="px-6 py-4">{{ user.roles ? user.roles|json_encode : '' }}</td>
+                                                <td class="px-6 py-4">{{ user.isVerified ? 'Oui' : 'Non'}}</td>
+                                                <td class="px-6 py-4">{{ user.getIsNotify ? 'Oui' : 'Non'}}</td>
+                                                <td class="px-6 py-4">
+                                                    <a href="{{ path('back_user_edit', {'id': user.id}) }}">Modifier</a>
+                                                    {{ include('back/user/_delete_form.html.twig') }}
+                                                </td>
+                                            </tr>
+                                        {% else %}
+                                            <tr>
+                                                <td colspan="11">Pas encore d'utilisateur</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="max-w-sm w-48 bg-white rounded-2xl overflow-hidden shadow-lg">
+                            <div class="px-6 py-4">
+                                <a href="{{ path('back_user_new') }}" class="no-underline hover:underline ...">Créer un utilisateur</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

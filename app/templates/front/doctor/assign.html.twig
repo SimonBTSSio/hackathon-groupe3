@@ -1,0 +1,20 @@
+{% extends 'base-front.html.twig' %}
+
+{% block title %}Consulter un médecin{% endblock %}
+
+{% block body %}
+    <div class="from-green-50 to-cyan-100">  
+        <div class="container m-auto px-6 text-gray-600 md:px-12 xl:px-6">
+            <h1 class="text-3xl text-black pb-6">Consulter un médecin</h1>
+
+            {{ include('front/doctor/_form.html.twig', {'button_label': 'Envoyer'}) }}
+            <br>
+
+            <div class="max-w-sm w-24 bg-white shadow sm:rounded-md overflow-hidden">
+                <div class="px-6 py-4">
+                    <a href="{{ path('front_default_index') }}" class="no-underline hover:underline ...">Retour</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

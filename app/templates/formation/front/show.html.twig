@@ -1,0 +1,51 @@
+{% extends 'base-front.html.twig' %}
+
+{% block title %}{{formation.title}}{% endblock %}
+
+{% block body %}
+    <div class="py-16">
+        <div class="container m-auto pl-56 text-gray-600 md:pl-56 xl:pl-56">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-800">{{formation.title}}</h1>
+                <span class="text-sm text-gray-500">Durée : {{formation.duration}}h</span>
+                <h2 class="text-2xl font-bold text-gray-800 mt-8">Description de la formation</h2>
+                <p class="text-gray-600 text-sm mt-2">{{formation.description|raw}}</p>
+            </div>
+            <div class="mt-8">
+                <h3 class="text-xl font-bold text-gray-800">Les sujets abordés dans la formation comprennent :</h3>
+                {% if formation.chapter is empty %}
+                    <div class="mt-4">
+                        <h4 class="text-md font-bold text-gray-800">Aucun contenu pour cette formation pour le moment.</h4>
+                    </div>
+                {% else %}
+                <ul class="list-disc list-inside">
+                    {% for chapitre in formation.chapter %}
+                        <li class="text-hackorange"><a href="#{{chapitre.title}}">{{chapitre.title}}</a></li>
+                    {% endfor %}
+                </ul>
+
+                <div class="mt-8">
+                    {% for chapitre in formation.chapter %}
+                        <div class="mb-4">
+                            <h2 id="{{chapitre.title}}" class="text-2xl font-bold text-gray-800 mb-2">{{chapitre.title}}</h2>
+                            <p class="text-gray-600">{{chapitre.content|raw}}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            {% if formation.quizz is empty %}
+                <div class="mt-8">
+                    <h3 class="text-md font-bold text-gray-800">Aucun quizz pour cette formation pour le moment.</h3>
+                </div>
+            {% else %}
+            <div>
+                <a href="{{path('front_quizz_show', {'id': formation.quizz.id})}}"><button class="bg-hackorange hover:bg-hackorange2 text-white px-4 py-2 rounded-tl-lg rounded-br-lg mt-8">Passez au quizz</button></a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+
+    

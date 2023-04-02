@@ -1,3 +1,29 @@
-controllers:
-    resource: ../src/Controller/
+controller_security:
+    resource: ../src/Controller/SecurityController.php
+    type: attribute
+
+controllers_back:
+    resource: ../src/Controller/Back
+    type: attribute
+    name_prefix: back_
+    prefix: /admin/
+
+controllers_front:
+    resource: ../src/Controller/Front
+    type: attribute
+    name_prefix: front_
+    prefix: /member/
+
+controllers_doctor:
+    resource: ../src/Controller/Doctor
+    type: attribute
+    name_prefix: doctor_
+    prefix: /doctor/
+
+controller_register:
+    resource: ../src/Controller/RegistrationController.php
+    type: attribute
+
+controller_landing:
+    resource: ../src/Controller/LandingController.php
     type: attribute

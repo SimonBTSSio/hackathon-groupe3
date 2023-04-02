@@ -1,0 +1,40 @@
+{% extends 'base-front.html.twig' %}
+
+{% block title %}Visite index{% endblock %}
+
+{% block body %}
+    <div class="">
+        <h1 class="text-3xl text-center mt-10">Vos futures visites</h1>
+
+        {% if visites %}
+            {% for visite in visites %}
+                {% if visite.date > date('now') %}
+                    <div class="space-y-6">
+                        <div class="border border-solid border-gray-500 mt-10">
+                            <p class="font-bold pl-72">Date de la visite : <p class="pl-72">-{{ visite.date|date('d-m-Y') }}</p>
+                            <p class="font-bold pl-72">Catégorie de la visite : <p class="pl-72">-{{ visite.categorie.libelle }}</p>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <p>Vous n'avez pas encore de visites</p>
+        {% endif %}
+
+        <h1 class="text-3xl text-center mt-10">Vos anciennes visites</h1>
+        {% if visites %}
+            {% for visite in visites %}
+                {% if visite.date < date('now') %}
+                    <div class="space-y-6">
+                        <div class="border border-solid border-gray-500 mt-10">
+                            <p class="font-bold pl-72">Date de la visite : <p class="pl-72">-{{ visite.date|date('d-m-Y') }}</p>
+                            <p class="font-bold pl-72">Catégorie de la visite : <p class="pl-72">-{{ visite.categorie.libelle }}</p>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <p>Vous n'avez pas encore de visites</p>
+        {% endif %}
+    </div>
+{% endblock %}

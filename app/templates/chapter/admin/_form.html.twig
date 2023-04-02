@@ -1,0 +1,50 @@
+{{ form_start(form) }}
+    <div class="mt-10 sm:mt-0">
+        <div class="">
+            <div class="mt-5 md:col-span-2 md:mt-0">
+            <form name="ability" method="POST">
+                <div class="overflow-hidden sm:rounded-md">
+                    <div class="px-4 py-5 sm:p-6">
+                        <div>
+                            <div class="col-span-6 sm:col-span-4">
+                                {{ form_row(form.title, {
+                                    'label_attr': {
+                                        'class': 'block mb-2 text-sm font-medium text-gray-900'
+                                    },
+                                    'attr': {
+                                        'class': 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5',
+                                        'placeholder': "Nom du chapitre"
+                                    },
+                                }) }}
+                            </div>
+                            <div class="col-span-6 sm:col-span-4">
+                                {{ form_row(form.content, {
+                                    'label_attr': {
+                                        'class': 'block mb-2 text-sm font-medium text-gray-900'
+                                    },
+                                    'attr': {
+                                        'class': 'bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5',
+                                    },
+                                }) }}
+                            </div>
+                        </div>
+                        {{ form_widget(form) }}
+                        <button type="submit" class="!bg-hackorange hover:!bg-hackorange2 !text-white px-4 py-2 rounded-tl-lg rounded-br-lg">{{ button_label|default('Créer') }}</button>
+                    </div>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+{{ form_end(form) }}
+
+{% block javascripts %}
+<script>
+    console.log(document.querySelector( '#chapter_content' ));
+    ClassicEditor
+        .create( document.querySelector( '#chapter_content' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
+{% endblock %}

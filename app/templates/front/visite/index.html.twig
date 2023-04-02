@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Visite index{% endblock %}
+
+{% block body %}
+    <h1>Visite index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for visite in visites %}
+            <tr>
+                <td>{{ visite.id }}</td>
+                <td>{{ visite.date ? visite.date|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('front_visite_show', {'id': visite.id}) }}">show</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('front_new_visite') }}">Create new</a>
+{% endblock %}

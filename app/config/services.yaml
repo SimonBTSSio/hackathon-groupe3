@@ -4,6 +4,9 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    img: '%kernel.project_dir%/public/img'
+    videos_directory: '%kernel.project_dir%/public/uploads/videos'
+    formation_img: '%kernel.project_dir%/public/img/formation'
 
 services:
     # default configuration for services in *this* file

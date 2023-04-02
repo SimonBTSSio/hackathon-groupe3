@@ -1,0 +1,62 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Formation index{% endblock %}
+
+{% block body %}
+    <div class="from-green-50 to-cyan-100">  
+        <div class="container m-auto px-6 text-gray-600 md:px-12 xl:px-6">
+            <div class="w-full mt-12">
+                <div class="flex flex-wrap -mx-3">
+                    <div class="flex-none w-full max-w-full px-3">
+                        <div class="flex gap-4 justify-between mb-8">
+                            <h1 class="text-3xl text-black">Les formations</h1>
+                            <a href="{{ path('back_formation_new') }}" class="bg-hackorange hover:bg-hackorange2 text-white px-4 py-2 rounded-tl-lg rounded-br-lg">
+                                <button>Créer une formation</button>
+                            </a>
+                        </div>
+                            <!-- component -->
+                            <div class="overflow-x-auto rounded-lg border border-gray-200 shadow-md">
+                                <table class="w-full border-collapse bg-white text-left text-sm text-gray-500">
+                                    <thead class="bg-hackorange">
+                                        <tr>
+                                            <th scope="col" class="px-6 py-4 font-medium text-white">Titre</th>
+                                            <th scope="col" class="px-6 py-4 font-medium text-white">Image</th>
+                                            <th scope="col" class="px-6 py-4 font-medium text-white">Auteur</th>
+                                            <th scope="col" class="px-6 py-4 font-medium text-white">Durée</th>
+                                            <th scope="col" class="px-6 py-4 font-medium text-white">Chapitres</th>
+                                            <th scope="col" class="px-6 py-4 font-medium text-white">Quizz</th>
+                                            <th scope="col" class="px-6 py-4 font-medium text-white">Crée le</th>
+                                            <th scope="col" class="px-6 py-4 font-medium text-white">Modifié le</th>
+                                            <th scope="col" class="px-6 py-4 font-medium text-white">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-gray-100 border-t border-gray-100">
+                                        {% for formation in formations %}
+                                            <tr class="hover:bg-gray-50">
+                                                <td class="px-6 py-4 text-hackorange"><a href="{{ path('back_formation_show', {'id': formation.id}) }}">{{ formation.title }}</a></td>
+                                                <td class="px-6 py-4"><img src="/img/formation/{{ formation.image }}" alt="image formation" width="100"></td>
+                                                <td class="px-6 py-4">{{ formation.author }}</td>
+                                                <td class="px-6 py-4">{{ formation.duration }}</td>
+                                                <td class="px-6 py-4">{{ formation.chapter|length }}</td>
+                                                <td class="px-6 py-4">{{ formation.quizz ? 'Oui' : 'Non' }}</td>
+                                                <td class="px-6 py-4">{{ formation.createdAt ? formation.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                                                <td class="px-6 py-4">{{ formation.updatedAt ? formation.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                                                <td class="px-6 py-4">
+                                                    <a href="{{ path('back_formation_edit', {'id': formation.id}) }}">Modifier</a>
+                                                    {{ include('formation/admin/_delete_form.html.twig') }}
+                                                </td>
+                                            </tr>
+                                        {% else %}
+                                            <tr>
+                                                <td colspan="11">Pas encore de formation.</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

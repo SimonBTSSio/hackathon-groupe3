@@ -1,0 +1,21 @@
+{% extends 'base-front.html.twig' %}
+
+{% block title %}Les Médecins{% endblock %}
+
+{% block body %}
+    <div class="container">
+    <h1>Les Médecins</h1>
+
+
+    <ul class="doctor">
+        {% for doctor in doctors %}
+            <li><a href="{{ path('front_doctor_consult', {'id': doctor.id}) }}">
+            <img src="{{ asset('build/images/doctor.jpg') }}" alt="{{ doctor.firstname }} {{ doctor.lastname }}">
+            Dr {{ doctor.lastname }} <br> Généraliste</a></li>
+        {% else %}
+            <li>Pas encore de médecin</li>
+        {% endfor %}
+    </ul>
+
+    </div>
+{% endblock %}

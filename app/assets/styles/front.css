@@ -1,0 +1,88 @@
+aside{
+    width: 240px;
+    background: #FCEEEC;
+    height: 100vh;
+    float: left;
+    padding: 2rem;
+}
+
+aside img{
+    width: 84px;
+    height: 50px;
+    margin-bottom: 3rem;
+}
+
+aside ul li{
+    margin-bottom: 1rem;
+}
+
+aside ul li a {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 17px;
+    color: #000000;
+    text-decoration: none;
+}
+
+aside ul li a .subtitles{
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 17px;
+}
+
+main{
+    display: flex;
+}
+
+aside .logout{
+    margin-top: 120%;
+}
+
+nav{
+    box-shadow: none;
+}
+
+.doctor {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    align-content: center;
+    margin-top: 2rem;
+}
+
+.doctor li {
+    margin: 1rem;
+    width: 165px;
+    height: 130px;
+    background: #FFD2C1;
+    border-radius: 12px 0px;
+    transition: .5s;
+}
+
+.doctor li:hover {
+    background: #FFEFC7;
+    transition: .5s;
+    border-radius: 0px 12px;
+}
+
+.doctor li a {
+    padding-top: 1rems;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 15px;
+    color: #000000;
+}
+
+.doctor li a img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+}
+
