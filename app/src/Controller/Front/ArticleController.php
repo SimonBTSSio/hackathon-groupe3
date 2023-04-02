@@ -31,10 +31,11 @@ class ArticleController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_article_show', methods: ['GET'])]
-    public function show(Article $article): Response
+    public function show(Article $article, UserInterface $user, UserRepository $userRepository): Response
     {
         return $this->render('front/article/show.html.twig', [
             'article' => $article,
+            'user' => $userRepository->findBy(array('id' => $user->getId()))
         ]);
     }
 }

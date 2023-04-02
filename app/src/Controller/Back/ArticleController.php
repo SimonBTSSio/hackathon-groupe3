@@ -16,6 +16,8 @@ use App\Service\FileUploader;
 use App\Security\EmailVerifier;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
+use App\Repository\UserRepository;
 
 #[Route('/article')]
 class ArticleController extends AbstractController
@@ -28,7 +30,7 @@ class ArticleController extends AbstractController
     }
 
     #[Route('/', name: 'app_article_index', methods: ['GET'])]
-    public function index(EntityManagerInterface $entityManager): Response
+    public function index(EntityManagerInterface $entityManager, UserRepository $userRepository, UserInterface $user): Response
     {
         $articles = $entityManager
             ->getRepository(Article::class)
@@ -36,11 +38,12 @@ class ArticleController extends AbstractController
 
         return $this->render('back/article/index.html.twig', [
             'articles' => $articles,
+            'user_admin' => $userRepository->findBy(array('id' => $user->getId())),
         ]);
     }
 
     #[Route('/new', name: 'app_article_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, MailerInterface $mailer): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, MailerInterface $mailer, UserRepository $userRepository, UserInterface $user_admin): Response
     {
         $article = new Article();
         $form = $this->createForm(ArticleType::class, $article);
@@ -94,20 +97,22 @@ class ArticleController extends AbstractController
         return $this->renderForm('back/article/new.html.twig', [
             'article' => $article,
             'form' => $form,
-            'tags' => $tagsArray
+            'tags' => $tagsArray,
+            'user_admin' => $userRepository->findBy(array('id' => $user_admin->getId())),
         ]);
     }
 
     #[Route('/{id}', name: 'app_article_show', methods: ['GET'])]
-    public function show(Article $article): Response
+    public function show(Article $article, UserRepository $userRepository, UserInterface $user): Response
     {
         return $this->render('back/article/show.html.twig', [
             'article' => $article,
+            'user_admin' => $userRepository->findBy(array('id' => $user->getId())),
         ]);
     }
 
     #[Route('/{id}/edit', name: 'app_article_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Article $article, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Article $article, EntityManagerInterface $entityManager, UserRepository $userRepository, UserInterface $user): Response
     {
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
@@ -121,6 +126,7 @@ class ArticleController extends AbstractController
         return $this->renderForm('back/article/edit.html.twig', [
             'article' => $article,
             'form' => $form,
+            'user_admin' => $userRepository->findBy(array('id' => $user->getId())),
         ]);
     }
 
