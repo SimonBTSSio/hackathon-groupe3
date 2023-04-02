@@ -1,4 +1,4 @@
-{% extends 'base-front.html.twig' %}
+{% extends 'base-back.html.twig' %}
 
 {% block title %}New Video{% endblock %}
 
@@ -6,10 +6,10 @@
     <div class="space-y-10">
         <h1 class="text-3xl text-center mt-10">Créer une nouvelle vidéo</h1>
 
+        {{ include('back/video/_form.html.twig') }}
+        
         <div class="ml-10 pl-72">
             <a class="p-4 rounded-lg border-gray-500 border border-solid bg-blue-500 text-white mt-10" href="{{ path('back_app_video_index') }}"> < Retour</a>
         </div>
-
-        {{ include('back/video/_form.html.twig') }}
     </div>
 {% endblock %}
